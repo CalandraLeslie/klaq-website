@@ -174,3 +174,50 @@ This project is proprietary software for 95.5 KLAQ radio station.
 ## Support
 
 For technical support or questions, contact the development team.
+
+## Netlify Deployment
+
+This project is configured for easy deployment on Netlify with static export.
+
+### Configuration Files
+
+- **next.config.ts**: Configured for static export with `output: 'export'`
+- **netlify.toml**: Contains build settings, headers, and redirects
+- **.gitignore**: Updated to ignore build artifacts and Netlify files
+
+### Deployment Steps
+
+1. **Connect to Netlify**: Link your GitHub repository to Netlify
+2. **Build Settings**: Netlify will automatically use the settings from `netlify.toml`:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+3. **Environment Variables**: No environment variables required for basic deployment
+4. **Custom Domain**: Configure your custom domain in Netlify dashboard if needed
+
+### Local Testing
+
+To test the static export locally:
+
+```bash
+# Build the static export
+npm run build
+
+# Serve the static files (install serve if needed)
+npx serve dist
+
+# Or use any static file server
+python -m http.server 3000 -d dist
+```
+
+### Features
+
+- ✅ Static export optimized for Netlify
+- ✅ All navigation and footer links working
+- ✅ Dynamic news articles with static generation
+- ✅ Custom 404 page
+- ✅ SEO-friendly URLs with trailing slashes
+- ✅ Proper redirects for legacy URLs
+- ✅ Security headers configured
+- ✅ Cache optimization for static assets
+
+The site is fully ready for production deployment on Netlify!
