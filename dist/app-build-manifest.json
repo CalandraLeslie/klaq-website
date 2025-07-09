@@ -21,6 +21,26 @@
       "static/chunks/main-app.js",
       "static/chunks/app/events/page.js"
     ],
+    "/events/concerts/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/events/concerts/page.js"
+    ],
+    "/events/festivals/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/events/festivals/page.js"
+    ],
+    "/events/station-events/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/events/station-events/page.js"
+    ],
+    "/events/community/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/events/community/page.js"
+    ],
     "/contest/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
