@@ -252,12 +252,12 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
         crossOrigin="anonymous"
         className="hidden"
       >
-        {/* Primary KLAQ stream - iHeartRadio */}
+        {/* Primary KLAQ 95.5 FM El Paso stream - iHeartRadio */}
         <source src="https://stream.revma.ihrhls.com/zc185" type="audio/mpeg" />
-        {/* Test stream for debugging */}
-        <source src="https://ice1.somafm.com/groovesalad-256-mp3" type="audio/mpeg" />
-        {/* StreamTheWorld backup */}
-        <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/KLAQ.mp3" type="audio/mpeg" />
+        {/* KLAQ StreamTheWorld stream */}
+        <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/KLAQFM.mp3" type="audio/mpeg" />
+        {/* KLAQ backup stream */}
+        <source src="https://ice1.iheartradio.com/live/185?cid=main&pname=TD&pversion=5.3.0-145&mount=web&program=klaq" type="audio/mpeg" />
       </audio>
 
       <div className="relative z-10">
