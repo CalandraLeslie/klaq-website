@@ -15,14 +15,16 @@ interface LiveStreamPlayerProps {
 }
 
 export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStreamPlayerProps) {
-  const [volume, setVolume] = useState(0.8);
+  const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [currentShow] = useState('Rock Block');
   const [listeners, setListeners] = useState(1247);
   const [isLoading, setIsLoading] = useState(false);
-  const [streamError, setStreamError] = useState<string | null>(null);
+  const [streamError, setStreamError] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const streamUrl = "https://live.amperwave.net/direct/townsquare-klaqfmaac-ibc3";
 
   // Track hydration to prevent mismatches
   useEffect(() => {
@@ -36,112 +38,78 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
     album: 'From Zero'
   });
 
-  // Handle audio element
-  useEffect(() => {
-    if (audioRef.current) {
-      const audio = audioRef.current;
+  // Handle play/pause with new stream logic
+  const togglePlayback = () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+      onPlayToggle();
+    } else {
+      setIsLoading(true);
+      setStreamError(false);
       
-      const handleLoadStart = () => {
-        setIsLoading(true);
-        setStreamError(null);
-      };
-      const handleCanPlay = () => {
+      audioRef.current?.play().catch(error => {
+        console.error("Audio playback failed:", error);
+        setStreamError(true);
         setIsLoading(false);
-        setStreamError(null);
-      };
-      const handleError = (e: Event) => {
-        setIsLoading(false);
-        console.error('Stream error:', e);
-        const target = e.target as HTMLAudioElement;
-        const error = target?.error;
-        let errorMessage = 'Stream temporarily unavailable. Please try again.';
-        
-        if (error) {
-          switch (error.code) {
-            case MediaError.MEDIA_ERR_ABORTED:
-              errorMessage = 'Stream playback aborted';
-              break;
-            case MediaError.MEDIA_ERR_NETWORK:
-              errorMessage = 'Network error while loading stream';
-              break;
-            case MediaError.MEDIA_ERR_DECODE:
-              errorMessage = 'Stream format error';
-              break;
-            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-              errorMessage = 'Stream source not supported';
-              break;
-          }
-        }
-        
-        setStreamError(errorMessage);
-      };
-      const handleStalled = () => {
-        console.log('Stream stalled, attempting to reconnect...');
-        setStreamError('Connection unstable, reconnecting...');
-      };
-      const handleAbort = () => {
-        setIsLoading(false);
-        setStreamError('Stream connection aborted');
-      };
-
-      audio.addEventListener('loadstart', handleLoadStart);
-      audio.addEventListener('canplay', handleCanPlay);
-      audio.addEventListener('error', handleError);
-      audio.addEventListener('stalled', handleStalled);
-      audio.addEventListener('abort', handleAbort);
-
-      return () => {
-        audio.removeEventListener('loadstart', handleLoadStart);
-        audio.removeEventListener('canplay', handleCanPlay);
-        audio.removeEventListener('error', handleError);
-        audio.removeEventListener('stalled', handleStalled);
-        audio.removeEventListener('abort', handleAbort);
-      };
+        // Open external player as fallback
+        window.open("https://klaq.com/listen-live/", "_blank", "noopener,noreferrer");
+      });
     }
+  };
+
+  // Handle audio events
+  useEffect(() => {
+    const handlePlay = () => {
+      setIsLoading(false);
+      setStreamError(false);
+    };
+    
+    const handleError = () => {
+      setStreamError(true);
+      setIsLoading(false);
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+
+    const handleLoadStart = () => {
+      setIsLoading(true);
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading(false);
+    };
+
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      audioElement.addEventListener('play', handlePlay);
+      audioElement.addEventListener('error', handleError);
+      audioElement.addEventListener('loadstart', handleLoadStart);
+      audioElement.addEventListener('canplay', handleCanPlay);
+    }
+
+    return () => {
+      if (audioElement) {
+        audioElement.removeEventListener('play', handlePlay);
+        audioElement.removeEventListener('error', handleError);
+        audioElement.removeEventListener('loadstart', handleLoadStart);
+        audioElement.removeEventListener('canplay', handleCanPlay);
+      }
+    };
   }, []);
 
-  // Handle play/pause
+  // Handle play/pause from parent component
   useEffect(() => {
     if (audioRef.current) {
       if (isPlaying) {
         setIsLoading(true);
-        setStreamError(null);
-        
-        // Attempt to play with retry logic
-        const attemptPlay = async (retries = 3) => {
-          try {
-            // Ensure the audio is loaded first
-            if (audioRef.current) {
-              audioRef.current.load();
-              await audioRef.current.play();
-              setIsLoading(false);
-              console.log('Stream started successfully');
-            }
-          } catch (error) {
-            console.error('Play attempt failed:', error);
-            if (retries > 0) {
-              console.log(`Retrying play... (${retries} attempts left)`);
-              setTimeout(() => attemptPlay(retries - 1), 1000);
-            } else {
-              if (error instanceof Error) {
-                if (error.name === 'NotAllowedError') {
-                  setStreamError('Please click play to start the stream (browser autoplay policy)');
-                } else if (error.name === 'NotSupportedError') {
-                  setStreamError('Stream format not supported by your browser');
-                } else if (error.name === 'AbortError') {
-                  setStreamError('Stream connection was interrupted');
-                } else {
-                  setStreamError('Unable to start stream. Please check your connection.');
-                }
-              } else {
-                setStreamError('Unable to start stream. Please check your connection.');
-              }
-              setIsLoading(false);
-            }
-          }
-        };
-        
-        attemptPlay();
+        setStreamError(false);
+        audioRef.current.load();
+        audioRef.current.play().catch(error => {
+          console.error("Play attempt failed:", error);
+          setStreamError(true);
+          setIsLoading(false);
+        });
       } else {
         audioRef.current.pause();
         setIsLoading(false);
@@ -205,12 +173,16 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
     return () => clearInterval(interval);
   }, [isPlaying]);
 
-  const handleVolumeChange = (newVolume: number) => {
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
     if (newVolume === 0) {
       setIsMuted(true);
     } else {
       setIsMuted(false);
+    }
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
     }
   };
 
@@ -221,7 +193,7 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
   const reloadStream = () => {
     if (audioRef.current) {
       setIsLoading(true);
-      setStreamError(null);
+      setStreamError(false);
       audioRef.current.load();
     }
   };
@@ -245,29 +217,23 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
         </div>
       )}
 
-      {/* Audio element with actual stream URL */}
+      {/* Audio element with stream URL */}
       <audio
         ref={audioRef}
+        src={streamUrl}
         preload="none"
         crossOrigin="anonymous"
         className="hidden"
-      >
-        {/* Primary KLAQ 95.5 FM El Paso stream - Townsquare Media */}
-        <source src="https://stream.revma.ihrhls.com/zc185" type="audio/mpeg" />
-        {/* Alternative Townsquare stream for KLAQ */}
-        <source src="https://ice1.leanstream.co/klaqfm" type="audio/mpeg" />
-        {/* StreamTheWorld backup stream */}
-        <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/KLAQFM.mp3" type="audio/mpeg" />
-        {/* Direct HLS stream backup */}
-        <source src="https://stream.revma.ihrhls.com/zc185/chunklist.m3u8" type="application/x-mpegURL" />
-      </audio>
+      />
 
       <div className="relative z-10">
         {/* Error Display */}
         {streamError && (
           <div className="mb-4 p-3 bg-red-800/50 border border-red-600/50 rounded-lg">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-red-200">{streamError}</p>
+              <p className="text-sm text-red-200">
+                {streamError ? "Stream temporarily unavailable. Redirecting to external player..." : "Stream error occurred"}
+              </p>
               <button
                 onClick={reloadStream}
                 className="ml-2 px-3 py-1 bg-red-700 hover:bg-red-600 rounded text-xs transition-colors"
@@ -321,7 +287,7 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
-              onClick={onPlayToggle}
+              onClick={togglePlayback}
               disabled={isLoading}
               className="w-12 h-12 bg-white/20 border border-white/30 hover:border-white/60 rounded-full flex items-center justify-center transition-all duration-200 focus-visible disabled:opacity-50"
               aria-label={isPlaying ? 'Pause stream' : 'Play stream'}
@@ -355,7 +321,7 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
                   max="1"
                   step="0.01"
                   value={isMuted ? 0 : volume}
-                  onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+                  onChange={handleVolumeChange}
                   className="w-16 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer slider"
                   aria-label="Volume control"
                 />

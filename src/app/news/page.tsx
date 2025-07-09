@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
-import { Clock, User, ArrowRight, Newspaper, Headphones } from 'lucide-react'
+import NewsPageClient from './NewsPageClient'
 
 export const metadata: Metadata = {
   title: 'KLAQ News - Rock Music News & Updates - 95.5 KLAQ',
@@ -8,6 +7,69 @@ export const metadata: Metadata = {
 }
 
 export default function NewsPage() {
+  return <NewsPageClient />
+}
+  // Live stream info state
+  const [nowPlaying, setNowPlaying] = useState({
+    title: 'Loading...',
+    artist: 'KLAQ 95.5 FM',
+    show: 'Rock Block'
+  })
+  const [listeners, setListeners] = useState(1247)
+
+  // Format listener count
+  const formatListeners = (num: number): string => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+
+  // Fetch current track and update listener count
+  useEffect(() => {
+    const fetchNowPlaying = async () => {
+      try {
+        const response = await fetch('https://np.tritondigital.com/public/nowplaying?mountName=KLAQ&numberToFetch=1&eventType=track')
+        const data = await response.json()
+        
+        if (data && data.nowplaying && data.nowplaying.length > 0) {
+          const track = data.nowplaying[0]
+          setNowPlaying({
+            title: track.songTitle || 'Classic Rock',
+            artist: track.artistName || 'KLAQ 95.5 FM',
+            show: track.programName || 'Rock Block'
+          })
+        }
+      } catch (error) {
+        console.log('Could not fetch current track info, using fallback')
+        // Fallback to demo tracks if API fails
+        const tracks = [
+          { title: 'The Emptiness Machine', artist: 'Linkin Park', show: 'Rock Block' },
+          { title: 'Black Dog', artist: 'Led Zeppelin', show: 'Classic Rock Hour' },
+          { title: 'Ace of Spades', artist: 'Motorhead', show: 'Metal Mayhem' },
+          { title: 'Today\'s Song', artist: 'Foo Fighters', show: 'Modern Rock' }
+        ]
+        const randomTrack = tracks[Math.floor(Math.random() * tracks.length)]
+        setNowPlaying(randomTrack)
+      }
+    }
+
+    // Mock listener count updates
+    const updateListeners = () => {
+      setListeners((prev: number) => prev + Math.floor(Math.random() * 10 - 5))
+    }
+
+    // Initial fetch
+    fetchNowPlaying()
+    updateListeners()
+
+    // Set up intervals
+    const trackInterval = setInterval(fetchNowPlaying, 30000) // Every 30 seconds
+    const listenerInterval = setInterval(updateListeners, 15000) // Every 15 seconds
+
+    return () => {
+      clearInterval(trackInterval)
+      clearInterval(listenerInterval)
+    }
+  }, [])
+
   const featuredNews = [
     {
       id: 1,
@@ -112,6 +174,40 @@ export default function NewsPage() {
               </Link>
               <Link href="/news/local" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
                 Local News
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Live Stream Info */}
+      <section className="py-8 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex items-center space-x-4 mb-4 md:mb-0">
+              <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
+                <Music className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-300">Now Playing on KLAQ 95.5</p>
+                <h3 className="text-lg font-bold">{nowPlaying.title}</h3>
+                <p className="text-sm text-gray-300">{nowPlaying.artist} • {nowPlaying.show}</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm">Live</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Users className="w-4 h-4" />
+                <span className="text-sm">{formatListeners(listeners)} listeners</span>
+              </div>
+              <Link 
+                href="/listen"
+                className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold transition-colors"
+              >
+                Listen Live
               </Link>
             </div>
           </div>
