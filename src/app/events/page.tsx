@@ -100,6 +100,129 @@ const events: Event[] = [
     category: 'Community',
     image: '/images/events/local-showcase.jpg',
     status: 'on-sale'
+  },
+  {
+    id: '7',
+    title: 'Ghost - Imperatour',
+    description: 'Swedish metal masters Ghost bring their theatrical live show to El Paso with their full stage production and costumes.',
+    date: '2025-11-02',
+    time: '8:00 PM',
+    venue: 'Don Haskins Center',
+    address: '1851 Wiggins Rd, El Paso, TX 79968',
+    ticketPrice: '$65 - $180',
+    category: 'Concert',
+    image: '/images/events/ghost-concert.jpg',
+    ticketUrl: 'https://ticketmaster.com',
+    status: 'upcoming'
+  },
+  {
+    id: '8',
+    title: 'KLAQ New Year\'s Eve Bash',
+    description: 'Ring in the New Year with KLAQ! Live music, champagne toast at midnight, and the best rock hits to close out the year.',
+    date: '2025-12-31',
+    time: '9:00 PM',
+    venue: 'Hotel Paso del Norte Rooftop',
+    address: '101 S El Paso St, El Paso, TX 79901',
+    ticketPrice: '$75 - $150',
+    category: 'Station Event',
+    image: '/images/events/nye-bash.jpg',
+    status: 'upcoming'
+  },
+  {
+    id: '9',
+    title: 'Desert Rock Festival',
+    description: 'Three days of desert rock featuring Kyuss Lives!, Fu Manchu, Sleep, and other stoner rock legends in a unique outdoor setting.',
+    date: '2025-10-17',
+    time: '2:00 PM',
+    venue: 'Franklin Mountains State Park',
+    address: '1331 McKelligon Canyon Rd, El Paso, TX 79930',
+    ticketPrice: '$180 - $350',
+    category: 'Festival',
+    featured: true,
+    image: '/images/events/desert-festival.jpg',
+    ticketUrl: 'https://desertrockfest.com',
+    status: 'on-sale'
+  },
+  {
+    id: '10',
+    title: 'Rock for Relief Benefit Concert',
+    description: 'Local bands unite for a cause! All proceeds benefit families affected by recent floods in our community.',
+    date: '2025-08-30',
+    time: '2:00 PM',
+    venue: 'Memorial Park Amphitheater',
+    address: '1701 N Copia St, El Paso, TX 79903',
+    ticketPrice: '$25 donation',
+    category: 'Community',
+    image: '/images/events/benefit-concert.jpg',
+    status: 'on-sale'
+  },
+  {
+    id: '11',
+    title: 'The Black Keys - Dropout Boogie Tour',
+    description: 'Blues rock duo The Black Keys return to El Paso with their signature sound and hits spanning their entire career.',
+    date: '2025-09-08',
+    time: '7:30 PM',
+    venue: 'Abraham Chavez Theatre',
+    address: '1 Civic Center Plaza, El Paso, TX 79901',
+    ticketPrice: '$55 - $125',
+    category: 'Concert',
+    image: '/images/events/black-keys.jpg',
+    ticketUrl: 'https://ticketmaster.com',
+    status: 'on-sale'
+  },
+  {
+    id: '12',
+    title: 'KLAQ Battle of the Bands',
+    description: 'Annual competition for local rock bands to win recording time, radio airplay, and cash prizes. Three rounds of competition.',
+    date: '2025-11-08',
+    time: '7:00 PM',
+    venue: 'Lowbrow Palace',
+    address: '2036 E Yandell Dr, El Paso, TX 79903',
+    ticketPrice: '$20',
+    category: 'Station Event',
+    featured: true,
+    image: '/images/events/battle-bands.jpg',
+    status: 'upcoming'
+  },
+  {
+    id: '13',
+    title: 'Mastodon - Leviathan Anniversary Tour',
+    description: 'Progressive metal giants Mastodon perform their classic album Leviathan in its entirety plus fan favorites.',
+    date: '2025-10-25',
+    time: '8:00 PM',
+    venue: 'Plaza Theatre',
+    address: '125 Pioneer Plaza, El Paso, TX 79901',
+    ticketPrice: '$45 - $85',
+    category: 'Concert',
+    image: '/images/events/mastodon.jpg',
+    ticketUrl: 'https://ticketmaster.com',
+    status: 'upcoming'
+  },
+  {
+    id: '14',
+    title: 'Downtown Block Party & Street Festival',
+    description: 'Annual street festival with live music on multiple stages, local food vendors, artisan booths, and family activities.',
+    date: '2025-10-19',
+    time: '12:00 PM',
+    venue: 'Downtown Arts District',
+    address: 'E San Antonio Ave, El Paso, TX 79901',
+    ticketPrice: 'FREE',
+    category: 'Community',
+    image: '/images/events/block-party.jpg',
+    status: 'upcoming'
+  },
+  {
+    id: '15',
+    title: 'KLAQ Acoustic Sessions',
+    description: 'Intimate acoustic performances by touring and local artists in our station studio. Limited seating for an up-close experience.',
+    date: '2025-09-28',
+    time: '7:30 PM',
+    venue: 'KLAQ Studios',
+    address: '4045 E Paisano Dr, El Paso, TX 79905',
+    ticketPrice: '$35',
+    category: 'Station Event',
+    image: '/images/events/acoustic-session.jpg',
+    status: 'on-sale'
   }
 ]
 
@@ -161,15 +284,15 @@ export default function EventsPage() {
               <div className="text-sm text-gray-600">Upcoming Events</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gray-900">5</div>
+              <div className="text-2xl font-bold text-gray-900">8</div>
               <div className="text-sm text-gray-600">Major Venues</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gray-900">2</div>
+              <div className="text-2xl font-bold text-gray-900">4</div>
               <div className="text-sm text-gray-600">Annual Festivals</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gray-900">52</div>
+              <div className="text-2xl font-bold text-gray-900">75+</div>
               <div className="text-sm text-gray-600">Events Per Year</div>
             </div>
           </div>
@@ -251,21 +374,21 @@ export default function EventsPage() {
           
           {/* Category Filter */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <button className="bg-orange-600 text-white px-4 py-2 rounded-lg font-medium">
+            <span className="bg-orange-600 text-white px-4 py-2 rounded-lg font-medium">
               All Events
-            </button>
-            <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-purple-100 hover:text-purple-700 transition-colors duration-300">
+            </span>
+            <Link href="/events/concerts" className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-purple-100 hover:text-purple-700 transition-colors duration-300">
               Concerts
-            </button>
-            <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-orange-100 hover:text-orange-700 transition-colors duration-300">
+            </Link>
+            <Link href="/events/festivals" className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-orange-100 hover:text-orange-700 transition-colors duration-300">
               Festivals
-            </button>
-            <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-red-100 hover:text-red-700 transition-colors duration-300">
+            </Link>
+            <Link href="/events/station-events" className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-red-100 hover:text-red-700 transition-colors duration-300">
               Station Events
-            </button>
-            <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-green-100 hover:text-green-700 transition-colors duration-300">
+            </Link>
+            <Link href="/events/community" className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-green-100 hover:text-green-700 transition-colors duration-300">
               Community
-            </button>
+            </Link>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -359,6 +482,16 @@ export default function EventsPage() {
               <h3 className="text-lg font-bold text-gray-900 mb-2">Centennial Hills Park</h3>
               <p className="text-gray-600 text-sm mb-2">Outdoor amphitheater</p>
               <p className="text-gray-500 text-xs">Free summer concert series</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Franklin Mountains State Park</h3>
+              <p className="text-gray-600 text-sm mb-2">Natural outdoor amphitheater</p>
+              <p className="text-gray-500 text-xs">Unique desert rock festival setting</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Memorial Park Amphitheater</h3>
+              <p className="text-gray-600 text-sm mb-2">Community outdoor stage</p>
+              <p className="text-gray-500 text-xs">Local events and benefit concerts</p>
             </div>
           </div>
         </div>
