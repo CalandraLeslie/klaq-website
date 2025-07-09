@@ -17,7 +17,7 @@ interface LiveStreamPlayerProps {
 export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStreamPlayerProps) {
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentShow, setCurrentShow] = useState('Rock Block');
+  const [currentShow] = useState('Rock Block');
   const [listeners, setListeners] = useState(1247);
   const [isLoading, setIsLoading] = useState(false);
   const [streamError, setStreamError] = useState<string | null>(null);
@@ -181,7 +181,7 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
           });
         }
       } catch (error) {
-        console.log('Could not fetch current track info, using fallback');
+        console.log('Could not fetch current track info, using fallback', error);
         // Fallback to demo tracks if API fails
         const tracks = [
           { title: 'The Emptiness Machine', artist: 'Linkin Park', album: 'From Zero' },
@@ -252,12 +252,14 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
         crossOrigin="anonymous"
         className="hidden"
       >
-        {/* Primary KLAQ 95.5 FM El Paso stream - iHeartRadio */}
+        {/* Primary KLAQ 95.5 FM El Paso stream - Townsquare Media */}
         <source src="https://stream.revma.ihrhls.com/zc185" type="audio/mpeg" />
-        {/* KLAQ StreamTheWorld stream */}
+        {/* Alternative Townsquare stream for KLAQ */}
+        <source src="https://ice1.leanstream.co/klaqfm" type="audio/mpeg" />
+        {/* StreamTheWorld backup stream */}
         <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/KLAQFM.mp3" type="audio/mpeg" />
-        {/* KLAQ backup stream */}
-        <source src="https://ice1.iheartradio.com/live/185?cid=main&pname=TD&pversion=5.3.0-145&mount=web&program=klaq" type="audio/mpeg" />
+        {/* Direct HLS stream backup */}
+        <source src="https://stream.revma.ihrhls.com/zc185/chunklist.m3u8" type="application/x-mpegURL" />
       </audio>
 
       <div className="relative z-10">

@@ -72,7 +72,6 @@ const shows: Show[] = [
 
 export default function ShowsPage() {
   const featuredShows = shows.filter(show => show.featured)
-  const regularShows = shows.filter(show => !show.featured)
 
   return (
     <main className="min-h-screen bg-gray-50">

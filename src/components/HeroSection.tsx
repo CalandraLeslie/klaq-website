@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Play, ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import LiveStreamPlayer from './LiveStreamPlayer';
