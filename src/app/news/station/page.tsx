@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { Clock, User, ArrowRight, Music, MapPin, Calendar, Radio } from 'lucide-react'
+import { User, ArrowRight, Music, MapPin, Calendar, Radio } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Station News - 95.5 KLAQ',
