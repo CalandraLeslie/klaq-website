@@ -135,13 +135,13 @@ export default function StationNewsPage() {
               Latest updates from KLAQ 95.5 FM including rock news, local El Paso updates, and concert announcements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="#rock-news" className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition-colors">
+              <Link href="https://klaq.netlify.app/news/rock-news/" className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition-colors">
                 Rock News
               </Link>
-              <Link href="#local-news" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
+              <Link href="https://klaq.netlify.app/news/local/" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
                 Local News
               </Link>
-              <Link href="#concert-news" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
+              <Link href="https://klaq.netlify.app/news/concerts/" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
                 Concert News
               </Link>
             </div>
@@ -188,7 +188,7 @@ export default function StationNewsPage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="/news/rock-news" className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
+            <Link href="https://klaq.netlify.app/news/rock-news/" className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
               View All Rock News
             </Link>
           </div>
@@ -234,7 +234,7 @@ export default function StationNewsPage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="/news/local" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            <Link href="https://klaq.netlify.app/news/local/" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
               View All Local News
             </Link>
           </div>
@@ -292,7 +292,7 @@ export default function StationNewsPage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="/news/concerts" className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+            <Link href="https://klaq.netlify.app/news/concerts/" className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
               View All Concert News
             </Link>
           </div>
