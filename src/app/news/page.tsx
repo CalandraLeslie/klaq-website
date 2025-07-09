@@ -95,22 +95,22 @@ export default function NewsPage() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <Newspaper className="w-16 h-16 mx-auto mb-4" />
             <h1 className="text-5xl font-bold mb-4">
               KLAQ News
             </h1>
-            <p className="text-xl text-blue-100 mb-8">
+            <p className="text-xl text-red-100 mb-8">
               Stay up to date with the latest rock music news, band updates, 
               concert announcements, and entertainment news from KLAQ 95.5 FM.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/news/rock-news" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+              <Link href="/news/rock-news" className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition-colors">
                 Rock News
               </Link>
-              <Link href="/news/local" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+              <Link href="/news/local" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
                 Local News
               </Link>
             </div>
@@ -132,7 +132,7 @@ export default function NewsPage() {
                     <Newspaper className="w-16 h-16 text-white" />
                   </div>
                   <div className="absolute top-4 left-4">
-                    <span className="bg-white text-blue-600 px-3 py-1 rounded-full text-sm font-bold">
+                    <span className="bg-white text-red-600 px-3 py-1 rounded-full text-sm font-bold">
                       {article.category}
                     </span>
                   </div>
@@ -156,7 +156,7 @@ export default function NewsPage() {
                   </div>
                   <Link 
                     href={`/news/${article.id}`}
-                    className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+                    className="inline-flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
                   >
                     Read More
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -200,7 +200,7 @@ export default function NewsPage() {
                     </div>
                     <Link 
                       href={`/news/${article.id}`}
-                      className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+                      className="inline-flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
                     >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-1" />
@@ -251,12 +251,12 @@ export default function NewsPage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="py-16 bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">
             Stay Informed
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
             Get the latest rock music news, concert updates, and KLAQ exclusives 
             delivered straight to your inbox.
           </p>
@@ -264,9 +264,9 @@ export default function NewsPage() {
             <input 
               type="email" 
               placeholder="Enter your email" 
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-300"
             />
-            <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-red-50 transition-colors">
               Subscribe
             </button>
           </div>
