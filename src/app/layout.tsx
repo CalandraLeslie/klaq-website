@@ -147,7 +147,7 @@ export default function RootLayout({
           isPlaying={isStreamPlaying || isLoading} 
           onPlayToggle={handleStreamToggle} 
         />
-        <main className="pt-28 md:pt-32">
+        <main className="">
           {children}
         </main>
         <Footer />
