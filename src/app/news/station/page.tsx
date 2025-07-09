@@ -149,6 +149,147 @@ export default function StationNewsPage() {
         </div>
       </section>
 
+      {/* Categories Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Categories</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Explore our comprehensive news coverage across different categories
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link href="https://klaq.netlify.app/news/rock-news/" className="group">
+              <div className="bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-lg text-white hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105">
+                <Music className="w-8 h-8 mb-4" />
+                <h3 className="text-xl font-bold mb-2">Rock News</h3>
+                <p className="text-red-100 text-sm">Latest rock music news, band updates, and industry insights</p>
+                <ArrowRight className="w-5 h-5 mt-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+            
+            <Link href="https://klaq.netlify.app/news/concerts/" className="group">
+              <div className="bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-lg text-white hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105">
+                <Calendar className="w-8 h-8 mb-4" />
+                <h3 className="text-xl font-bold mb-2">Concert News</h3>
+                <p className="text-red-100 text-sm">Upcoming shows, tour announcements, and event coverage</p>
+                <ArrowRight className="w-5 h-5 mt-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+            
+            <Link href="https://klaq.netlify.app/news/local/" className="group">
+              <div className="bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-lg text-white hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105">
+                <MapPin className="w-8 h-8 mb-4" />
+                <h3 className="text-xl font-bold mb-2">Local News</h3>
+                <p className="text-red-100 text-sm">El Paso area news, events, and community updates</p>
+                <ArrowRight className="w-5 h-5 mt-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+            
+            <Link href="https://klaq.netlify.app/news/station/" className="group">
+              <div className="bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-lg text-white hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105">
+                <Radio className="w-8 h-8 mb-4" />
+                <h3 className="text-xl font-bold mb-2">Station News</h3>
+                <p className="text-red-100 text-sm">KLAQ 95.5 FM updates, DJ news, and station announcements</p>
+                <ArrowRight className="w-5 h-5 mt-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">News Categories</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Rock News Category */}
+            <Link 
+              href="https://klaq.netlify.app/news/rock-news/" 
+              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-red-600 group"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center group-hover:bg-red-200 transition-colors">
+                  <Music className="w-8 h-8 text-red-600" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Rock News</h3>
+              <p className="text-gray-600 text-sm text-center">
+                Latest rock music news, artist updates, and industry insights
+              </p>
+              <div className="mt-4 text-center">
+                <span className="text-red-600 font-semibold group-hover:text-red-800 transition-colors">
+                  View Articles →
+                </span>
+              </div>
+            </Link>
+
+            {/* Concert News Category */}
+            <Link 
+              href="https://klaq.netlify.app/news/concerts/" 
+              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-red-600 group"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center group-hover:bg-red-200 transition-colors">
+                  <Calendar className="w-8 h-8 text-red-600" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Concert News</h3>
+              <p className="text-gray-600 text-sm text-center">
+                Upcoming concerts, tour announcements, and event coverage
+              </p>
+              <div className="mt-4 text-center">
+                <span className="text-red-600 font-semibold group-hover:text-red-800 transition-colors">
+                  View Articles →
+                </span>
+              </div>
+            </Link>
+
+            {/* Local News Category */}
+            <Link 
+              href="https://klaq.netlify.app/news/local/" 
+              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-red-600 group"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center group-hover:bg-red-200 transition-colors">
+                  <MapPin className="w-8 h-8 text-red-600" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Local News</h3>
+              <p className="text-gray-600 text-sm text-center">
+                El Paso community news and local events coverage
+              </p>
+              <div className="mt-4 text-center">
+                <span className="text-red-600 font-semibold group-hover:text-red-800 transition-colors">
+                  View Articles →
+                </span>
+              </div>
+            </Link>
+
+            {/* Station News Category */}
+            <Link 
+              href="https://klaq.netlify.app/news/station/" 
+              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-red-600 group"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center group-hover:bg-red-200 transition-colors">
+                  <Radio className="w-8 h-8 text-red-600" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Station News</h3>
+              <p className="text-gray-600 text-sm text-center">
+                KLAQ updates, DJ news, and station announcements
+              </p>
+              <div className="mt-4 text-center">
+                <span className="text-red-600 font-semibold group-hover:text-red-800 transition-colors">
+                  View Articles →
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Rock News Section */}
       <section id="rock-news" className="py-16">
         <div className="container mx-auto px-4">
@@ -199,14 +340,14 @@ export default function StationNewsPage() {
       <section id="local-news" className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex items-center mb-12">
-            <MapPin className="w-8 h-8 text-blue-600 mr-3" />
+            <MapPin className="w-8 h-8 text-red-600 mr-3" />
             <h2 className="text-4xl font-bold text-gray-900">Local News</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {localNews.map((article) => (
               <article key={article.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
                     Local News
                   </span>
                   <span className="text-sm text-gray-500">{article.timeAgo}</span>
@@ -224,7 +365,7 @@ export default function StationNewsPage() {
                   </div>
                   <Link 
                     href={`/news/${article.id}`}
-                    className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+                    className="inline-flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
                   >
                     Read More
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -234,7 +375,7 @@ export default function StationNewsPage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="https://klaq.netlify.app/news/local/" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            <Link href="https://klaq.netlify.app/news/local/" className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
               View All Local News
             </Link>
           </div>
@@ -245,14 +386,14 @@ export default function StationNewsPage() {
       <section id="concert-news" className="py-16">
         <div className="container mx-auto px-4">
           <div className="flex items-center mb-12">
-            <Calendar className="w-8 h-8 text-purple-600 mr-3" />
+            <Calendar className="w-8 h-8 text-red-600 mr-3" />
             <h2 className="text-4xl font-bold text-gray-900">Concert News</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {concertNews.map((article) => (
               <article key={article.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
                     Concert News
                   </span>
                   <span className="text-sm text-gray-500">{article.timeAgo}</span>
@@ -282,7 +423,7 @@ export default function StationNewsPage() {
                   </div>
                   <Link 
                     href={`/news/${article.id}`}
-                    className="inline-flex items-center text-purple-600 font-semibold hover:text-purple-800 transition-colors"
+                    className="inline-flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
                   >
                     Read More
                     <ArrowRight className="w-4 h-4 ml-1" />
@@ -292,7 +433,7 @@ export default function StationNewsPage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="https://klaq.netlify.app/news/concerts/" className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+            <Link href="https://klaq.netlify.app/news/concerts/" className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
               View All Concert News
             </Link>
           </div>
