@@ -143,11 +143,12 @@ export default function DJsPage() {
           {klaqDJs.map((dj) => (
             <div key={dj.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               {/* DJ Image */}
-              <div className="relative h-64 bg-gradient-to-br from-red-500 to-red-700 overflow-hidden">
+              <div className="relative h-80 bg-gradient-to-br from-red-500 to-red-700 overflow-hidden">
                 <img
                   src={dj.image}
                   alt={dj.name}
-                  className="w-full h-full object-contain bg-gray-100"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: 'center top' }}
                   onError={(e) => {
                     // Fallback to placeholder if image fails to load
                     const target = e.target as HTMLImageElement;

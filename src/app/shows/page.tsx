@@ -155,12 +155,13 @@ export default function ShowsPage() {
             {shows.map((show) => (
               <div key={show.id} className="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 {show.image && (
-                  <div className="relative h-48">
+                  <div className="relative h-64">
                     <Image
                       src={show.image}
                       alt={show.host}
                       fill
                       className="object-cover"
+                      style={{ objectPosition: 'center top' }}
                     />
                   </div>
                 )}

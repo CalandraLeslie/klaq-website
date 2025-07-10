@@ -181,3 +181,28 @@ body {
 .sticky-player-enter {
   animation: slideUp 0.3s ease-out;
 }
+
+/* DJ Image Display Improvements */
+.dj-image {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.dj-image-container {
+  overflow: hidden;
+}
+
+/* Ensure faces are not cut off */
+.show-image {
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Better aspect ratios for DJ images */
+.dj-avatar {
+  aspect-ratio: 1 / 1;
+}
+
+.dj-card-image {
+  aspect-ratio: 4 / 5;
+}
