@@ -245,16 +245,16 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
 
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-              <Radio className="w-6 h-6" />
+            <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+              <Radio className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="text-lg font-bold">95.5 KLAQ</h3>
-              <p className="text-sm text-red-100">Live Stream</p>
+              <h3 className="text-2xl font-bold">95.5 KLAQ</h3>
+              <p className="text-base text-red-100">Live Stream</p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-2 text-sm">
+          <div className="flex items-center space-x-2 text-base">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             <span>{isClient ? formatListeners(listeners) : '1,247'} listeners</span>
           </div>

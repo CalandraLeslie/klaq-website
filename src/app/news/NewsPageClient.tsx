@@ -153,7 +153,7 @@ export default function NewsPageClient() {
   return (
     <main className="page-container bg-gray-50">
       {/* Hero Section */}
-      <section className="page-hero bg-gradient-to-r from-red-600 to-red-700 text-white">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 lg:pb-28 bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container-responsive">
           <div className="text-center max-w-4xl mx-auto">
             <Newspaper className="w-16 h-16 mx-auto mb-4" />

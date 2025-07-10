@@ -142,7 +142,8 @@ export default function DJSection() {
                   <img
                     src={dj.image}
                     alt={dj.name}
-                    className="w-full h-full object-contain bg-gray-100"
+                    className="w-full h-full object-cover object-center bg-gray-100"
+                    style={{ objectPosition: 'center 25%' }}
                     onError={(e) => {
                       // Fallback to icon if image fails to load
                       const target = e.target as HTMLImageElement;
