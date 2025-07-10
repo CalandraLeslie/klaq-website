@@ -74,17 +74,31 @@ export default function ShowsPage() {
   const featuredShows = shows.filter(show => show.featured)
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="page-container bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white py-16">
-        <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-bold mb-4">
-            KLAQ 95.5 Shows
-          </h1>
-          <p className="text-xl text-red-100 max-w-3xl">
-            Experience the best in rock music with our lineup of talented hosts and DJs. 
-            From morning wake-up calls to late-night rock sessions, we've got your day covered.
-          </p>
+      <section className="page-hero bg-gradient-to-r from-red-600 to-red-700 text-white">
+        <div className="container-responsive">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
+              KLAQ Radio Shows
+            </h1>
+            <p className="text-lg sm:text-xl lg:text-2xl text-red-100 mt-4 max-w-3xl mx-auto">
+              Experience the best in rock music with our lineup of talented hosts and DJs. 
+              From morning wake-up calls to late-night rock sessions, we've got your entire day covered with El Paso's Best Rock.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-red-100">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="font-medium">Live Programming</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="font-medium">24/7 Rock</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="font-medium">Local Hosts</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

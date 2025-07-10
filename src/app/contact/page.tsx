@@ -1,11 +1,11 @@
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="page-container bg-gray-50">
       <div className="container-responsive">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact KLAQ 95.5</h1>
-            <p className="text-xl text-gray-600">Get in touch with El Paso's Best Rock</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-4">Contact KLAQ 95.5</h1>
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mt-4 max-w-3xl mx-auto">Get in touch with El Paso's Best Rock - we'd love to hear from you!</p>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

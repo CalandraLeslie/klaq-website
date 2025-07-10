@@ -109,27 +109,28 @@ const klaqDJs = [
 
 export default function DJsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-container bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-16">
+      <div className="page-hero bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container-responsive">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Meet The DJs</h1>
-            <p className="text-xl md:text-2xl text-red-100 mb-8">
-              The voices behind El Paso's Best Rock
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">Meet Your Rock Family</h1>
+            <p className="text-lg sm:text-xl lg:text-2xl text-red-100 mt-4 max-w-3xl mx-auto">
+              Get to know the passionate voices bringing you El Paso's Best Rock 24/7. 
+              Our talented DJs are your connection to the music you love and the community you're part of.
             </p>
-            <div className="flex items-center justify-center space-x-6 text-red-100">
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-red-100">
               <div className="flex items-center space-x-2">
                 <Radio className="w-5 h-5" />
-                <span>Live & Local</span>
+                <span className="font-medium">Live & Local</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="w-5 h-5" />
-                <span>Your Rock Family</span>
+                <span className="font-medium">Your Rock Family</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="w-5 h-5" />
-                <span>El Paso, TX</span>
+                <span className="font-medium">El Paso, TX</span>
               </div>
             </div>
           </div>

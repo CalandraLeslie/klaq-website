@@ -1,7 +1,6 @@
 'use client';
 
 import { Play, ArrowRight, Calendar, MapPin } from 'lucide-react';
-import { motion } from 'framer-motion';
 import LiveStreamPlayer from './LiveStreamPlayer';
 
 interface HeroSectionProps {
@@ -37,18 +36,8 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
       <div className="container-responsive relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Hero Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-white"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mb-6"
-            >
+          <div className="text-white">
+            <div className="mb-6">
               <span className="inline-block px-4 py-2 bg-red-600/20 border border-red-500/30 rounded-full text-red-400 text-sm font-medium mb-4">
                 🔴 LIVE NOW
               </span>
@@ -61,24 +50,14 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
               <h2 className="text-2xl md:text-3xl text-gray-300 font-light mb-6">
                 El Paso's Best Rock
               </h2>
-            </motion.div>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl text-gray-300 mb-8 leading-relaxed"
-            >
+            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
               Your home for the best rock music, live shows, local news, and the 
               music that moves El Paso. Tune in now and rock with us!
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 mb-12"
-            >
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <button
                 onClick={onPlayToggle}
                 className="flex items-center justify-center space-x-3 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 focus-visible group"
@@ -92,15 +71,10 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
                 <span>View Events</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-            </motion.div>
+            </div>
 
             {/* Quick Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="grid grid-cols-3 gap-6 text-center"
-            >
+            <div className="grid grid-cols-3 gap-6 text-center">
               <div>
                 <p className="text-2xl font-bold text-red-400">95.5</p>
                 <p className="text-sm text-gray-400">FM Frequency</p>
@@ -113,16 +87,11 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
                 <p className="text-2xl font-bold text-red-400">1M+</p>
                 <p className="text-sm text-gray-400">Monthly Listeners</p>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Right Column - Live Stream Player & Events */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <LiveStreamPlayer
               isPlaying={isPlaying}
               onPlayToggle={onPlayToggle || (() => {})}
@@ -136,11 +105,8 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
               </h3>
               <div className="space-y-4">
                 {upcomingEvents.map((event, index) => (
-                  <motion.div
+                  <div
                     key={event.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1 + index * 0.1 }}
                     className="bg-white/5 border border-white/20 rounded-lg p-4 hover:border-white/40 transition-all duration-200"
                   >
                     <h4 className="font-semibold text-white mb-1">{event.title}</h4>
@@ -151,29 +117,20 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
                       <MapPin className="w-3 h-3 mr-1" />
                       <span>{event.location}</span>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-white/50 rounded-full mt-2"
-          />
+          <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-bounce" />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

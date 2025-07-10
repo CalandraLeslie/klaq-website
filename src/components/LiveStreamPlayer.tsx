@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 // Utility function to format numbers consistently on server and client
 const formatListeners = (num: number): string => {
@@ -264,17 +263,12 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
         {/* Now Playing */}
         <div className="mb-4">
           <p className="text-sm text-red-100 mb-1">Now Playing</p>
-          <motion.div
-            key={currentTrack.title}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-1"
-          >
+          <div className="space-y-1">
             <h4 className="font-semibold truncate">{currentTrack.title}</h4>
             <p className="text-sm text-red-100">
               {currentTrack.artist} • {currentTrack.album}
             </p>
-          </motion.div>
+          </div>
         </div>
 
         {/* Current Show */}

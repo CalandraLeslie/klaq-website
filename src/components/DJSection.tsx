@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Clock, Twitter, Instagram, Facebook, Mic } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 interface DJ {
   id: string;
@@ -123,27 +122,18 @@ export default function DJSection() {
     <section className="py-16 bg-gray-50">
       <div className="container-responsive">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet the DJs</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             The voices behind El Paso's best rock station - bringing you the music and entertainment you love 24/7
           </p>
-        </motion.div>
+        </div>
 
         {/* DJ Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {djProfiles.map((dj, index) => (
-            <motion.div
+            <div
               key={dj.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
               className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
             >
               {/* DJ Image/Avatar */}
@@ -255,17 +245,12 @@ export default function DJSection() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Schedule Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-white rounded-xl shadow-lg p-8 mt-16"
-        >
+        <div className="bg-white rounded-xl shadow-lg p-8 mt-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Daily Schedule</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {djProfiles.map((dj) => (
@@ -297,7 +282,7 @@ export default function DJSection() {
               Learn more about our entire team and their stories
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* DJ Detail Modal */}
@@ -307,12 +292,7 @@ export default function DJSection() {
             className="absolute inset-0 bg-black/50"
             onClick={closeDJModal}
           ></div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          >
+          <div className="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-8">
               <div className="flex items-start justify-between mb-6">
                 <div>
@@ -397,7 +377,7 @@ export default function DJSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
     </section>

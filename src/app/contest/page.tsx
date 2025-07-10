@@ -79,21 +79,21 @@ export default function ContestPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="page-container bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white py-16">
-        <div className="container mx-auto px-4">
+      <section className="page-hero bg-gradient-to-r from-red-600 to-red-700 text-white">
+        <div className="container-responsive">
           <div className="text-center max-w-4xl mx-auto">
             <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-300" />
-            <h1 className="text-5xl font-bold mb-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
               Win Big with KLAQ!
             </h1>
-            <p className="text-xl text-red-100 mb-8">
+            <p className="text-lg sm:text-xl lg:text-2xl text-red-100 mt-4 max-w-3xl mx-auto">
               Enter to win amazing prizes with KLAQ 95.5 FM contests and giveaways. 
-              From concert tickets to cash prizes, we have something for everyone!
+              From concert tickets to cash prizes, we have something exciting for everyone in the KLAQ family!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="#contests" className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-red-50 transition-colors">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+              <Link href="#contests" className="btn-primary bg-white text-red-600 hover:bg-red-50">
                 View Active Contests
               </Link>
               <Link href="/contest-rules" className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">

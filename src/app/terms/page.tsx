@@ -1,22 +1,22 @@
 export default function TermsOfService() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="page-container bg-gray-50">
       <div className="container-responsive">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Terms of Service</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-6">Terms of Service</h1>
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-4">
               Last updated: {new Date().toLocaleDateString()}
             </p>
             
             <h2 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Acceptance of Terms</h2>
-            <p className="text-gray-700 mb-4">
+            <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
               By accessing and using the KLAQ 95.5 FM website, you accept and agree to be bound by the terms 
               and provision of this agreement.
             </p>
             
             <h2 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Use License</h2>
-            <p className="text-gray-700 mb-4">
+            <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
               Permission is granted to temporarily download one copy of the materials on KLAQ's website for 
               personal, non-commercial transitory viewing only.
             </p>

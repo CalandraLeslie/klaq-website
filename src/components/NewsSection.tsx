@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { Clock, ArrowRight, TrendingUp } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 interface NewsArticle {
   id: string;
@@ -98,26 +97,15 @@ export default function NewsSection() {
     <section className="py-16 bg-white">
       <div className="container-responsive">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest News</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Stay up to date with the latest rock music news, local events, and stories from El Paso
           </p>
-        </motion.div>
+        </div>
 
         {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 mb-12"
-        >
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((category) => (
             <button
               key={category}
@@ -134,18 +122,13 @@ export default function NewsSection() {
               {category}
             </button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Articles Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Featured Article */}
           {featuredArticle && selectedCategory === 'All' && (
-            <motion.article
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="lg:col-span-2"
-            >
+            <article className="lg:col-span-2">
               <Link 
                 href={`/news/${featuredArticle.id}`}
                 className="group block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
@@ -180,19 +163,15 @@ export default function NewsSection() {
                   </div>
                 </div>
               </Link>
-            </motion.article>
+            </article>
           )}
 
           {/* Regular Articles */}
           <div className={`${featuredArticle && selectedCategory === 'All' ? 'lg:col-span-1' : 'lg:col-span-3'}`}>
             <div className={`grid gap-6 ${featuredArticle && selectedCategory === 'All' ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3'}`}>
               {regularArticles.map((article, index) => (
-                <motion.article
+                <article
                   key={article.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
                   className="group"
                 >
                   <Link 
@@ -224,7 +203,7 @@ export default function NewsSection() {
                       </div>
                     </div>
                   </Link>
-                </motion.article>
+                </article>
               ))}
             </div>
           </div>
@@ -232,12 +211,7 @@ export default function NewsSection() {
 
         {/* Load More Button */}
         {visibleArticles < filteredArticles.length && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
+          <div className="text-center mt-12">
             <button
               onClick={loadMoreArticles}
               className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-medium transition-colors duration-200 focus-visible"
@@ -246,16 +220,11 @@ export default function NewsSection() {
               <span>Load More Articles</span>
               <ArrowRight className="w-4 h-4" />
             </button>
-          </motion.div>
+          </div>
         )}
 
         {/* Newsletter Signup */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-gradient-to-r from-red-600 to-red-700 rounded-xl p-8 mt-16 text-center text-white"
-        >
+        <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-xl p-8 mt-16 text-center text-white">
           <h3 className="text-2xl font-bold mb-4">Stay in the Loop</h3>
           <p className="mb-6 text-red-100">
             Get the latest rock news, contest alerts, and event updates delivered to your inbox
@@ -271,7 +240,7 @@ export default function NewsSection() {
               Subscribe
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

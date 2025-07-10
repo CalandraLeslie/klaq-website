@@ -12,9 +12,9 @@ export default function ListenPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="page-container bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 to-black text-white py-16">
+      <section className="page-hero bg-gradient-to-br from-gray-900 to-black text-white">
           <div className="container-responsive">
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center space-x-2 bg-red-600/20 border border-red-500/30 rounded-full px-4 py-2 mb-6">
@@ -22,13 +22,13 @@ export default function ListenPage() {
                 <span className="text-red-400 font-medium">LIVE NOW</span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
                 Listen <span className="text-red-500">Live</span>
               </h1>
               
-              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Tune in to 95.5 KLAQ and experience El Paso's best rock music 24/7. 
-                Crystal clear streaming, no ads, just pure rock.
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mt-4 max-w-3xl mx-auto mb-8">
+                Stream 95.5 KLAQ live and experience El Paso's Best Rock in crystal-clear HD quality. 
+                No ads, no interruptions – just pure rock music 24/7.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">

@@ -102,3 +102,54 @@ body {
 .container-responsive {
   @apply container mx-auto px-4 sm:px-6 lg:px-8;
 }
+
+/* Page layout utilities to ensure content is visible below fixed header */
+.page-container {
+  @apply pt-20 sm:pt-24 lg:pt-28 min-h-screen;
+}
+
+.page-hero {
+  @apply pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24;
+}
+
+.page-title {
+  @apply text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight;
+}
+
+.page-title-white {
+  @apply text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white;
+}
+
+.page-subtitle {
+  @apply text-lg sm:text-xl lg:text-2xl text-gray-600 mt-4 max-w-3xl;
+}
+
+.page-subtitle-white {
+  @apply text-lg sm:text-xl lg:text-2xl text-white mt-4 max-w-3xl;
+}
+
+.section-title {
+  @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6;
+}
+
+.section-subtitle {
+  @apply text-lg text-gray-600 mb-8 max-w-2xl;
+}
+
+/* Improved readability and accessibility */
+.content-text {
+  @apply text-base sm:text-lg leading-relaxed text-gray-700;
+}
+
+.content-text-large {
+  @apply text-lg sm:text-xl leading-relaxed text-gray-700;
+}
+
+/* Enhanced focus states for better UX */
+.btn-primary {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-800 text-white hover:bg-gray-900 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+}
