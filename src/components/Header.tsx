@@ -80,7 +80,7 @@ export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps)
               <Link
                 key={item.name}
                 href={item.href}
-                className={`relative font-semibold text-sm tracking-wide uppercase transition-all duration-300 nav-focus-visible group ${
+                className={`relative font-semibold text-base tracking-wide uppercase transition-all duration-300 nav-focus-visible group ${
                   scrolled 
                     ? 'text-gray-700 hover:text-red-600' 
                     : 'text-gray-100 hover:text-white'
