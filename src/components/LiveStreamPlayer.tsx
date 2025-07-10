@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
 import NowPlayingWidget from './NowPlayingWidget';
+import { fetchCurrentTrack, fetchListenerCount, getCurrentShow } from '@/utils/klaqApi';
 
 // Utility function to format numbers consistently on server and client
 const formatListeners = (num: number): string => {
@@ -33,40 +34,6 @@ export default function LiveStreamPlayer({
 
   const streamUrl = "https://live.amperwave.net/direct/townsquare-klaqfmaac-ibc3";
 
-  // Function to get current show based on time
-  const getCurrentShow = () => {
-    const now = new Date();
-    const currentHour = now.getHours();
-    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    
-    // Weekend vs Weekday schedule
-    if (dayOfWeek === 0 || dayOfWeek === 6) { // Weekend
-      if (currentHour >= 6 && currentHour < 10) {
-        return 'Weekend Rock';
-      } else if (currentHour >= 10 && currentHour < 14) {
-        return 'Classic Rock Saturday';
-      } else if (currentHour >= 14 && currentHour < 18) {
-        return 'Rock Block';
-      } else if (currentHour >= 18 && currentHour < 22) {
-        return 'Saturday Night Rock';
-      } else {
-        return 'Overnight Rock';
-      }
-    } else { // Weekday
-      if (currentHour >= 6 && currentHour < 10) {
-        return 'The Buzz Adams Morning Show';
-      } else if (currentHour >= 10 && currentHour < 15) {
-        return 'Kat & the Morning Crew';
-      } else if (currentHour >= 15 && currentHour < 19) {
-        return 'Joanna Barba Show';
-      } else if (currentHour >= 19 && currentHour < 23) {
-        return 'Chuck Armstrong Night Show';
-      } else {
-        return 'Overnight Rock';
-      }
-    }
-  };
-
   // Track hydration to prevent mismatches
   useEffect(() => {
     setIsClient(true);
@@ -87,7 +54,8 @@ export default function LiveStreamPlayer({
   const [currentTrack, setCurrentTrack] = useState({
     title: 'The Emptiness Machine',
     artist: 'Linkin Park',
-    album: 'From Zero'
+    album: 'From Zero',
+    year: '2024'
   });
 
   // Handle play/pause with new stream logic
@@ -176,53 +144,32 @@ export default function LiveStreamPlayer({
     }
   }, [volume, isMuted]);
 
-  // Mock listener count updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setListeners(prev => prev + Math.floor(Math.random() * 10 - 5));
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
 
-  // KLAQ now playing API integration
+
+  // KLAQ now playing API integration using shared utilities
   useEffect(() => {
-    // Function to fetch current track from KLAQ's now playing API
-    const fetchNowPlaying = async () => {
-      try {
-        const response = await fetch('https://np.tritondigital.com/public/nowplaying?mountName=KLAQ&numberToFetch=1&eventType=track');
-        const data = await response.json();
-        
-        if (data && data.nowplaying && data.nowplaying.length > 0) {
-          const track = data.nowplaying[0];
-          setCurrentTrack({
-            title: track.songTitle || 'Classic Rock',
-            artist: track.artistName || 'KLAQ 95.5',
-            album: track.albumName || ''
-          });
-        }
-      } catch (error) {
-        console.log('Could not fetch current track info, using fallback', error);
-        // Fallback to demo tracks if API fails
-        const tracks = [
-          { title: 'The Emptiness Machine', artist: 'Linkin Park', album: 'From Zero' },
-          { title: 'Black Dog', artist: 'Led Zeppelin', album: 'Led Zeppelin IV' },
-          { title: 'Blurry', artist: 'Puddle Of Mudd', album: 'Come Clean' },
-          { title: 'Ace of Spades', artist: 'Motorhead', album: 'Bloodcovered' },
-          { title: 'Today\'s Song', artist: 'Foo Fighters', album: 'Today\'s Song - Single' }
-        ];
-        
-        if (isPlaying) {
-          const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-          setCurrentTrack(randomTrack);
-        }
-      }
+    const updateTrackInfo = async () => {
+      const trackInfo = await fetchCurrentTrack();
+      setCurrentTrack(trackInfo);
     };
 
-    // Fetch immediately and then every 30 seconds
-    fetchNowPlaying();
-    const interval = setInterval(fetchNowPlaying, 30000);
+    const updateListenerCount = async () => {
+      const count = await fetchListenerCount();
+      setListeners(count);
+    };
+
+    // Fetch data immediately
+    updateTrackInfo();
+    updateListenerCount();
     
-    return () => clearInterval(interval);
+    // Set up intervals
+    const trackInterval = setInterval(updateTrackInfo, 30000); // Every 30 seconds
+    const listenerInterval = setInterval(updateListenerCount, 60000); // Every minute
+    
+    return () => {
+      clearInterval(trackInterval);
+      clearInterval(listenerInterval);
+    };
   }, [isPlaying]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -330,7 +277,7 @@ export default function LiveStreamPlayer({
           <div className="space-y-1">
             <h4 className="font-semibold truncate">{currentTrack.title}</h4>
             <p className="text-sm text-red-100">
-              {currentTrack.artist} • {currentTrack.album}
+              {currentTrack.artist} • {currentTrack.album}{currentTrack.year && ` (${currentTrack.year})`}
             </p>
           </div>
         </div>

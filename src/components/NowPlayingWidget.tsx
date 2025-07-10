@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { fetchCurrentTrack, fetchListenerCount, getCurrentShow } from '@/utils/klaqApi';
 
 interface NowPlayingData {
   song: string;
@@ -25,39 +26,6 @@ export default function NowPlayingWidget({
   onPlayToggle, 
   compact = false 
 }: NowPlayingWidgetProps) {
-  // Function to get current show based on time
-  const getCurrentShow = () => {
-    const now = new Date();
-    const currentHour = now.getHours();
-    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    
-    // Weekend vs Weekday schedule
-    if (dayOfWeek === 0 || dayOfWeek === 6) { // Weekend
-      if (currentHour >= 6 && currentHour < 10) {
-        return 'Weekend Rock';
-      } else if (currentHour >= 10 && currentHour < 14) {
-        return 'Classic Rock Saturday';
-      } else if (currentHour >= 14 && currentHour < 18) {
-        return 'Rock Block';
-      } else if (currentHour >= 18 && currentHour < 22) {
-        return 'Saturday Night Rock';
-      } else {
-        return 'Overnight Rock';
-      }
-    } else { // Weekday
-      if (currentHour >= 6 && currentHour < 10) {
-        return 'The Buzz Adams Morning Show';
-      } else if (currentHour >= 10 && currentHour < 15) {
-        return 'Kat & the Morning Crew';
-      } else if (currentHour >= 15 && currentHour < 19) {
-        return 'Joanna Barba Show';
-      } else if (currentHour >= 19 && currentHour < 23) {
-        return 'Chuck Armstrong Night Show';
-      } else {
-        return 'Overnight Rock';
-      }
-    }
-  };
 
   const [nowPlaying, setNowPlaying] = useState<NowPlayingData>({
     song: 'The Emptiness Machine',
@@ -71,18 +39,45 @@ export default function NowPlayingWidget({
     currentTime: '2:34'
   });
 
-  // Simulate live updates (in real implementation, this would fetch from KLAQ API)
+  // Fetch real now playing data from KLAQ APIs using shared utilities
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updateTrackInfo = async () => {
+      const trackInfo = await fetchCurrentTrack();
       setNowPlaying(prev => ({
         ...prev,
-        listeners: Math.floor(Math.random() * 100) + 1200,
+        song: trackInfo.title,
+        artist: trackInfo.artist,
+        album: trackInfo.album,
+        year: trackInfo.year,
+        currentShow: getCurrentShow()
+      }));
+    };
+
+    const updateListenerCount = async () => {
+      const count = await fetchListenerCount();
+      setNowPlaying(prev => ({ ...prev, listeners: count }));
+    };
+
+    // Fetch data immediately
+    updateTrackInfo();
+    updateListenerCount();
+    
+    // Set up intervals
+    const trackInterval = setInterval(updateTrackInfo, 30000); // Every 30 seconds
+    const listenerInterval = setInterval(updateListenerCount, 60000); // Every minute
+    const progressInterval = setInterval(() => {
+      setNowPlaying(prev => ({
+        ...prev,
         progress: (prev.progress + 1) % 100,
         currentShow: getCurrentShow() // Update show info
       }));
     }, 5000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(trackInterval);
+      clearInterval(listenerInterval);
+      clearInterval(progressInterval);
+    };
   }, []);
 
   if (compact) {
@@ -155,7 +150,9 @@ export default function NowPlayingWidget({
           <div className="text-sm text-gray-300 mb-1">NOW PLAYING</div>
           <div className="text-2xl font-bold mb-1">{nowPlaying.song}</div>
           <div className="text-lg text-gray-300 mb-2">{nowPlaying.artist}</div>
-          <div className="text-sm text-gray-400">{nowPlaying.album} • {nowPlaying.year}</div>
+          <div className="text-sm text-gray-400">
+            {nowPlaying.album}{nowPlaying.year && ` (${nowPlaying.year})`}
+          </div>
           
           <div className="mt-4 text-sm text-gray-300">
             <div className="flex items-center space-x-2">
