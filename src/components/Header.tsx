@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Play, Radio, Volume2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
   isPlaying?: boolean;
@@ -18,6 +17,7 @@ const navigation = [
   { name: 'News', href: '/news' },
   { name: 'Events', href: '/events' },
   { name: 'Contest', href: '/contest' },
+  { name: 'Request', href: '/request' },
 ];
 
 export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps) {
@@ -161,108 +161,89 @@ export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps)
       </nav>
 
       {/* Enhanced Mobile Navigation Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            {/* Enhanced Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
-              onClick={() => setMobileMenuOpen(false)}
-            />
+      {mobileMenuOpen && (
+        <>
+          {/* Enhanced Backdrop */}
+          <div
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
 
-            {/* Enhanced Menu Panel */}
-            <motion.div
-              initial={{ x: '100%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '100%', opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white/95 backdrop-blur-xl px-8 py-8 sm:max-w-sm lg:hidden shadow-2xl"
-            >
-              {/* Enhanced Header */}
-              <div className="flex items-center justify-between mb-8">
-                <Link href="/" className="flex items-center space-x-3" onClick={() => setMobileMenuOpen(false)}>
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg">
-                    <Radio className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-black text-gray-900">95.5 KLAQ</h2>
-                    <p className="text-sm font-medium text-gray-600">EL PASO'S BEST ROCK</p>
-                  </div>
-                </Link>
-                <button
-                  type="button"
-                  className="p-2 text-gray-700 hover:text-red-600 transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Enhanced Navigation Links */}
-              <div className="space-y-2 mb-8">
-                {navigation.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className="flex items-center justify-between text-lg font-semibold text-gray-900 hover:text-red-600 transition-all duration-200 nav-focus-visible group"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <span>{item.name}</span>
-                      <div className="w-2 h-2 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Enhanced Live Stream Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="border-t border-gray-200 pt-6"
+          {/* Enhanced Menu Panel */}
+          <div
+            className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white/95 backdrop-blur-xl px-8 py-8 sm:max-w-sm lg:hidden shadow-2xl"
+          >
+            {/* Enhanced Header */}
+            <div className="flex items-center justify-between mb-8">
+              <Link href="/" className="flex items-center space-x-3" onClick={() => setMobileMenuOpen(false)}>
+                <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg">
+                  <Radio className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-gray-900">95.5 KLAQ</h2>
+                  <p className="text-sm font-medium text-gray-600">EL PASO'S BEST ROCK</p>
+                </div>
+              </Link>
+              <button
+                type="button"
+                className="p-2 text-gray-700 hover:text-red-600 transition-all duration-200"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <button
-                  onClick={() => {
-                    onPlayToggle?.();
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-center space-x-3 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                    isPlaying
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-xl shadow-red-500/30'
-                      : 'bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:from-gray-900 hover:to-black'
-                  }`}
-                >
-                  <div className="flex items-center justify-center w-6 h-6">
-                    {isPlaying ? (
-                      <Volume2 className="w-5 h-5" />
-                    ) : (
-                      <Play className="w-5 h-5" />
-                    )}
-                  </div>
-                  <span>{isPlaying ? 'LIVE ON AIR' : 'LISTEN LIVE'}</span>
-                  {isPlaying && (
-                    <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Enhanced Navigation Links */}
+            <div className="space-y-2 mb-8">
+              {navigation.map((item, index) => (
+                <div key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center justify-between text-lg font-semibold text-gray-900 hover:text-red-600 transition-all duration-200 nav-focus-visible group"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span>{item.name}</span>
+                    <div className="w-2 h-2 bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            {/* Enhanced Live Stream Section */}
+            <div className="border-t border-gray-200 pt-6">
+              <button
+                onClick={() => {
+                  onPlayToggle?.();
+                  setMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center justify-center space-x-3 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                  isPlaying
+                    ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-xl shadow-red-500/30'
+                    : 'bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:from-gray-900 hover:to-black'
+                }`}
+              >
+                <div className="flex items-center justify-center w-6 h-6">
+                  {isPlaying ? (
+                    <Volume2 className="w-5 h-5" />
+                  ) : (
+                    <Play className="w-5 h-5" />
                   )}
-                </button>
-                
+                </div>
+                <span>{isPlaying ? 'LIVE ON AIR' : 'LISTEN LIVE'}</span>
                 {isPlaying && (
-                  <p className="text-center text-sm text-gray-600 mt-3 font-medium">
-                    95.5 FM • El Paso's Best Rock
-                  </p>
+                  <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
                 )}
-              </motion.div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              </button>
+              
+              {isPlaying && (
+                <p className="text-center text-sm text-gray-600 mt-3 font-medium">
+                  95.5 FM • El Paso's Best Rock
+                </p>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }
