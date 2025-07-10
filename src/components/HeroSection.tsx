@@ -95,8 +95,8 @@ export default function HeroSection({ isPlaying = false, onPlayToggle }: HeroSec
             <LiveStreamPlayer
               isPlaying={isPlaying}
               onPlayToggle={onPlayToggle || (() => {})}
-              showNowPlaying={true}
-              compact={true}
+              showNowPlaying={false}
+              compact={false}
             />
 
             {/* Upcoming Events */}

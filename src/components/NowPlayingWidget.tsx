@@ -25,12 +25,46 @@ export default function NowPlayingWidget({
   onPlayToggle, 
   compact = false 
 }: NowPlayingWidgetProps) {
+  // Function to get current show based on time
+  const getCurrentShow = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Weekend vs Weekday schedule
+    if (dayOfWeek === 0 || dayOfWeek === 6) { // Weekend
+      if (currentHour >= 6 && currentHour < 10) {
+        return 'Weekend Rock';
+      } else if (currentHour >= 10 && currentHour < 14) {
+        return 'Classic Rock Saturday';
+      } else if (currentHour >= 14 && currentHour < 18) {
+        return 'Rock Block';
+      } else if (currentHour >= 18 && currentHour < 22) {
+        return 'Saturday Night Rock';
+      } else {
+        return 'Overnight Rock';
+      }
+    } else { // Weekday
+      if (currentHour >= 6 && currentHour < 10) {
+        return 'The Buzz Adams Morning Show';
+      } else if (currentHour >= 10 && currentHour < 15) {
+        return 'Kat & the Morning Crew';
+      } else if (currentHour >= 15 && currentHour < 19) {
+        return 'Joanna Barba Show';
+      } else if (currentHour >= 19 && currentHour < 23) {
+        return 'Chuck Armstrong Night Show';
+      } else {
+        return 'Overnight Rock';
+      }
+    }
+  };
+
   const [nowPlaying, setNowPlaying] = useState<NowPlayingData>({
     song: 'The Emptiness Machine',
     artist: 'Linkin Park',
     album: 'From Zero',
     year: '2024',
-    currentShow: 'The Buzz Adams Morning Show',
+    currentShow: getCurrentShow(),
     listeners: 1247,
     progress: 62,
     duration: '4:12',
@@ -43,7 +77,8 @@ export default function NowPlayingWidget({
       setNowPlaying(prev => ({
         ...prev,
         listeners: Math.floor(Math.random() * 100) + 1200,
-        progress: (prev.progress + 1) % 100
+        progress: (prev.progress + 1) % 100,
+        currentShow: getCurrentShow() // Update show info
       }));
     }, 5000);
 

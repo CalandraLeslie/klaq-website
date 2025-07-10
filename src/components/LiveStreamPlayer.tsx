@@ -24,7 +24,7 @@ export default function LiveStreamPlayer({
 }: LiveStreamPlayerProps) {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentShow] = useState('Rock Block');
+  const [currentShow, setCurrentShow] = useState('Rock Block');
   const [listeners, setListeners] = useState(1247);
   const [isLoading, setIsLoading] = useState(false);
   const [streamError, setStreamError] = useState(false);
@@ -33,9 +33,54 @@ export default function LiveStreamPlayer({
 
   const streamUrl = "https://live.amperwave.net/direct/townsquare-klaqfmaac-ibc3";
 
+  // Function to get current show based on time
+  const getCurrentShow = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Weekend vs Weekday schedule
+    if (dayOfWeek === 0 || dayOfWeek === 6) { // Weekend
+      if (currentHour >= 6 && currentHour < 10) {
+        return 'Weekend Rock';
+      } else if (currentHour >= 10 && currentHour < 14) {
+        return 'Classic Rock Saturday';
+      } else if (currentHour >= 14 && currentHour < 18) {
+        return 'Rock Block';
+      } else if (currentHour >= 18 && currentHour < 22) {
+        return 'Saturday Night Rock';
+      } else {
+        return 'Overnight Rock';
+      }
+    } else { // Weekday
+      if (currentHour >= 6 && currentHour < 10) {
+        return 'The Buzz Adams Morning Show';
+      } else if (currentHour >= 10 && currentHour < 15) {
+        return 'Kat & the Morning Crew';
+      } else if (currentHour >= 15 && currentHour < 19) {
+        return 'Joanna Barba Show';
+      } else if (currentHour >= 19 && currentHour < 23) {
+        return 'Chuck Armstrong Night Show';
+      } else {
+        return 'Overnight Rock';
+      }
+    }
+  };
+
   // Track hydration to prevent mismatches
   useEffect(() => {
     setIsClient(true);
+    setCurrentShow(getCurrentShow());
+  }, []);
+
+  // Update current show every minute
+  useEffect(() => {
+    const updateShow = () => {
+      setCurrentShow(getCurrentShow());
+    };
+    
+    const interval = setInterval(updateShow, 60000); // Update every minute
+    return () => clearInterval(interval);
   }, []);
 
   // Current track state (updated from KLAQ's now playing API)
