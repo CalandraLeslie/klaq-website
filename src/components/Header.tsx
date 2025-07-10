@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Play, Radio, Volume2 } from 'lucide-react';
+import NowPlayingWidget from './NowPlayingWidget';
 
 interface HeaderProps {
   isPlaying?: boolean;
@@ -93,6 +94,17 @@ export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps)
               </Link>
             ))}
           </div>
+
+          {/* Compact Now Playing Widget (Desktop Only) */}
+          {isPlaying && (
+            <div className="hidden xl:block">
+              <NowPlayingWidget 
+                isPlaying={isPlaying}
+                onPlayToggle={onPlayToggle}
+                compact={true}
+              />
+            </div>
+          )}
 
           {/* Enhanced Live Stream Control & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
@@ -234,6 +246,16 @@ export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps)
                   <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
                 )}
               </button>
+              
+              {isPlaying && (
+                <div className="mt-4">
+                  <NowPlayingWidget 
+                    isPlaying={isPlaying}
+                    onPlayToggle={onPlayToggle}
+                    compact={true}
+                  />
+                </div>
+              )}
               
               {isPlaying && (
                 <p className="text-center text-sm text-gray-600 mt-3 font-medium">

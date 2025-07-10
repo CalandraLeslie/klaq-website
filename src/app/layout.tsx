@@ -4,6 +4,7 @@ import { Inter, Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import StickyMiniPlayer from '@/components/StickyMiniPlayer';
 import { useState, useRef, useEffect } from 'react';
 
 const inter = Inter({
@@ -150,6 +151,13 @@ export default function RootLayout({
         <main className="">
           {children}
         </main>
+        
+        {/* Sticky Mini Player */}
+        <StickyMiniPlayer 
+          isPlaying={isStreamPlaying}
+          onPlayToggle={handleStreamToggle}
+        />
+        
         <Footer />
       </body>
     </html>

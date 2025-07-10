@@ -67,6 +67,8 @@ export default function ListenPage() {
               <LiveStreamPlayer
                 isPlaying={isStreamPlaying}
                 onPlayToggle={handleStreamToggle}
+                showNowPlaying={true}
+                compact={false}
               />
               
               {/* Additional Controls */}

@@ -1,4 +1,14 @@
+'use client';
+
+import { useState } from 'react';
+import NowPlayingWidget from '@/components/NowPlayingWidget';
+
 export default function RequestPage() {
+  const [isPlaying, setIsPlaying] = useState(true); // Default to playing for demo
+  
+  const handlePlayToggle = () => {
+    setIsPlaying(!isPlaying);
+  };
   return (
     <div className="page-container bg-gray-50 overflow-auto">
       <div className="container-responsive py-8">
@@ -11,6 +21,13 @@ export default function RequestPage() {
               Tell us what you want to hear! Submit your request below or call our request line.
             </p>
           </div>
+
+          {/* Now Playing Widget */}
+          <NowPlayingWidget 
+            isPlaying={isPlaying}
+            onPlayToggle={handlePlayToggle}
+            compact={false}
+          />
           
           {/* Quick Request Line CTA */}
           <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl p-6 mb-8 text-center">
@@ -180,23 +197,90 @@ export default function RequestPage() {
                 </div>
               </div>
 
-              {/* Popular Requests */}
+              {/* Recently Played */}
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Requests</h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Recently Played</h2>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span>Live Updates</span>
+                  </div>
+                </div>
                 <div className="space-y-4">
                   {[
-                    { song: 'Bohemian Rhapsody', artist: 'Queen' },
-                    { song: 'Sweet Child O\' Mine', artist: 'Guns N\' Roses' },
-                    { song: 'Enter Sandman', artist: 'Metallica' },
-                    { song: 'Back in Black', artist: 'AC/DC' },
+                    { 
+                      song: 'The Emptiness Machine', 
+                      artist: 'Linkin Park', 
+                      album: 'From Zero',
+                      time: 'Now Playing',
+                      isPlaying: true 
+                    },
+                    { 
+                      song: 'Bohemian Rhapsody', 
+                      artist: 'Queen', 
+                      album: 'A Night at the Opera',
+                      time: '3 mins ago',
+                      isPlaying: false 
+                    },
+                    { 
+                      song: 'Sweet Child O\' Mine', 
+                      artist: 'Guns N\' Roses', 
+                      album: 'Appetite for Destruction',
+                      time: '7 mins ago',
+                      isPlaying: false 
+                    },
+                    { 
+                      song: 'Enter Sandman', 
+                      artist: 'Metallica', 
+                      album: 'Metallica (Black Album)',
+                      time: '11 mins ago',
+                      isPlaying: false 
+                    },
+                    { 
+                      song: 'Back in Black', 
+                      artist: 'AC/DC', 
+                      album: 'Back in Black',
+                      time: '15 mins ago',
+                      isPlaying: false 
+                    },
                   ].map((track, index) => (
-                    <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
-                      <div>
-                        <p className="font-semibold text-gray-900">{track.song}</p>
-                        <p className="text-sm text-gray-600">{track.artist}</p>
+                    <div key={index} className={`flex items-center justify-between py-3 px-4 rounded-lg border-b border-gray-100 last:border-b-0 ${track.isPlaying ? 'bg-red-50 border-red-200' : ''}`}>
+                      <div className="flex items-center space-x-3">
+                        {track.isPlaying && (
+                          <div className="flex space-x-1">
+                            <div className="w-1 h-4 bg-red-500 rounded animate-pulse"></div>
+                            <div className="w-1 h-4 bg-red-500 rounded animate-pulse" style={{ animationDelay: '0.1s' }}></div>
+                            <div className="w-1 h-4 bg-red-500 rounded animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                          </div>
+                        )}
+                        <div>
+                          <p className={`font-semibold ${track.isPlaying ? 'text-red-700' : 'text-gray-900'}`}>
+                            {track.song}
+                          </p>
+                          <p className="text-sm text-gray-600">{track.artist}</p>
+                          <p className="text-xs text-gray-500">{track.album}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className={`text-xs font-medium ${track.isPlaying ? 'text-red-600' : 'text-gray-500'}`}>
+                          {track.time}
+                        </span>
                       </div>
                     </div>
                   ))}
+                </div>
+                
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Stream Info:</span>
+                    <div className="flex items-center space-x-4 text-gray-500">
+                      <span>320kbps</span>
+                      <span>•</span>
+                      <span>Stereo</span>
+                      <span>•</span>
+                      <span className="text-green-600 font-medium">Connected</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

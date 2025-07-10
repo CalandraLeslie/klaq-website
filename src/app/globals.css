@@ -7,9 +7,6 @@
   --klaq-dark-gray: #374151;
   --klaq-light-gray: #f9fafb;
   --klaq-white: #ffffff;
-}
-
-@theme inline {
   --font-sans: var(--font-inter);
   --font-display: var(--font-roboto-condensed);
 }
@@ -152,4 +149,35 @@ body {
 
 .btn-secondary {
   @apply bg-gray-800 text-white hover:bg-gray-900 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+}
+
+/* Sticky Mini Player Styles */
+.mini-player-active {
+  padding-bottom: 4rem; /* Space for sticky player */
+}
+
+.mini-player-bar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Ensure content doesn't get hidden behind sticky elements */
+.page-container {
+  min-height: 100vh;
+}
+
+/* Animation for sticky player */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sticky-player-enter {
+  animation: slideUp 0.3s ease-out;
 }

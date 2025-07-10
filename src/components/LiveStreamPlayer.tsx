@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
+import NowPlayingWidget from './NowPlayingWidget';
 
 // Utility function to format numbers consistently on server and client
 const formatListeners = (num: number): string => {
@@ -11,9 +12,16 @@ const formatListeners = (num: number): string => {
 interface LiveStreamPlayerProps {
   isPlaying: boolean;
   onPlayToggle: () => void;
+  showNowPlaying?: boolean;
+  compact?: boolean;
 }
 
-export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStreamPlayerProps) {
+export default function LiveStreamPlayer({ 
+  isPlaying, 
+  onPlayToggle, 
+  showNowPlaying = true, 
+  compact = false 
+}: LiveStreamPlayerProps) {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [currentShow] = useState('Rock Block');
@@ -198,7 +206,18 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
   };
 
   return (
-    <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-xl shadow-2xl relative overflow-hidden">
+    <div className="space-y-4">
+      {/* Now Playing Widget */}
+      {showNowPlaying && (
+        <NowPlayingWidget 
+          isPlaying={isPlaying}
+          onPlayToggle={onPlayToggle}
+          compact={compact}
+        />
+      )}
+      
+      {/* Main Stream Player */}
+      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-xl shadow-2xl relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-800/20"></div>
       {isPlaying && (
@@ -351,6 +370,7 @@ export default function LiveStreamPlayer({ isPlaying, onPlayToggle }: LiveStream
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
       `}</style>
+      </div>
     </div>
   );
 }
