@@ -71,7 +71,7 @@ export default function NewsPageClient() {
       id: 1,
       title: 'Mexico Stuns USA In Gold Cup As Gulf Of Mexico Trends',
       excerpt: 'Mexico defeated the USA in a thrilling Gold Cup match that has El Paso sports fans buzzing. The victory sparked celebrations across the border region.',
-      author: 'Joanna Barba',
+      author: 'Sports Reporter',
       date: '2025-07-09',
       category: 'Sports',
       image: '/images/news/gold-cup.jpg',
@@ -118,27 +118,107 @@ export default function NewsPageClient() {
     },
     {
       id: 6,
-      title: 'Steve Kaplowitz Celebrates 30 Years On-Air with 600 ESPN El Paso',
-      excerpt: 'Local radio veteran Steve Kaplowitz marks three decades of broadcasting excellence with Townsquare Media El Paso.',
+      title: 'El Paso Music Festival Announces 2025 Lineup',
+      excerpt: 'The annual El Paso Music Festival reveals an incredible roster of rock, metal, and alternative acts for this year\'s event.',
       author: 'KLAQ Staff',
       date: '2025-07-07',
       category: 'Local News'
     },
     {
       id: 7,
-      title: 'Check Your Fridge For This Massive Bacon Recall',
-      excerpt: 'A major bacon recall affects products nationwide. Here\'s what El Paso consumers need to know.',
+      title: 'Metallica Announces Stadium Tour with Special El Paso Date',
+      excerpt: 'The metal legends confirm their massive stadium tour will include a stop at the Sun Bowl, marking their return to El Paso.',
       author: 'KLAQ Staff',
       date: '2025-07-06',
-      category: 'Consumer News'
+      category: 'Concert News'
+    },
+    {
+      id: 8,
+      title: 'Red Hot Chili Peppers Drop Surprise New Single',
+      excerpt: 'The funk-rock icons release their first new material in two years, giving fans a taste of what\'s to come from their upcoming album.',
+      author: 'Chad Childers',
+      date: '2025-07-06',
+      category: 'Rock News'
+    },
+    {
+      id: 9,
+      title: 'Local Band Desert Kings Signs Major Label Deal',
+      excerpt: 'El Paso\'s Desert Kings become the latest local act to break into the mainstream, signing with Atlantic Records.',
+      author: 'KLAQ Staff',
+      date: '2025-07-05',
+      category: 'Local News'
+    },
+    {
+      id: 10,
+      title: 'Green Day Announces 30th Anniversary American Idiot Tour',
+      excerpt: 'The punk rock trio will perform their iconic album in its entirety on a special anniversary tour hitting major cities.',
+      author: 'Loudwire Staff',
+      date: '2025-07-05',
+      category: 'Concert News'
+    },
+    {
+      id: 11,
+      title: 'Foo Fighters Tease New Material in Studio Updates',
+      excerpt: 'Dave Grohl and company share behind-the-scenes footage from the studio, hinting at their next musical direction.',
+      author: 'Bryan Rolli',
+      date: '2025-07-04',
+      category: 'Rock News'
+    },
+    {
+      id: 12,
+      title: 'KLAQ Rocks the Park 2025 Date Confirmed',
+      excerpt: 'El Paso\'s premier rock festival announces its official date and teases an amazing lineup for this year\'s event.',
+      author: 'KLAQ Staff',
+      date: '2025-07-04',
+      category: 'Station News'
+    },
+    {
+      id: 13,
+      title: 'Alice in Chains Guitarist Jerry Cantrell Announces Solo Tour',
+      excerpt: 'The legendary guitarist announces solo dates showcasing material from his latest album and classic Alice in Chains tracks.',
+      author: 'Lauryn Schaffner',
+      date: '2025-07-03',
+      category: 'Concert News'
+    },
+    {
+      id: 13,
+      title: 'Breaking: System of a Down Announces El Paso Return After 15 Years',
+      excerpt: 'The metal legends confirm their highly anticipated return to El Paso with a Don Haskins Center show scheduled for fall 2025.',
+      author: 'KLAQ Staff',
+      date: '2025-01-12',
+      category: 'Concert News'
+    },
+    {
+      id: 14,
+      title: 'Local Venue The Lowbrow Palace Announces Major Renovation',
+      excerpt: 'El Paso\'s beloved indie venue reveals plans for significant upgrades including new sound system and expanded capacity.',
+      author: 'Maria Rodriguez',
+      date: '2025-01-11',
+      category: 'Local News'
+    },
+    {
+      id: 15,
+      title: 'Foo Fighters Add Second El Paso Date Due to Overwhelming Demand',
+      excerpt: 'After selling out in minutes, the rock icons announce an additional show at the Sun Bowl for their upcoming tour.',
+      author: 'KLAQ Staff',
+      date: '2025-01-10',
+      category: 'Concert News'
+    },
+    {
+      id: 16,
+      title: 'El Paso\'s Neon Desert Music Festival Confirms 2025 Dates',
+      excerpt: 'The annual music festival announces its return with promises of the biggest rock lineup yet for the 2025 edition.',
+      author: 'Festival Team',
+      date: '2025-01-09',
+      category: 'Local News'
     }
   ]
 
   const newsCategories = [
-    { name: 'Rock News', count: 15, href: '/news/rock-news' },
-    { name: 'Local News', count: 8, href: '/news/local' },
-    { name: 'Concert News', count: 12, href: '/news/concerts' },
-    { name: 'Station News', count: 5, href: '/news/station' }
+    { name: 'Rock News', count: 28, href: '/news/rock-news' },
+    { name: 'Local News', count: 18, href: '/news/local' },
+    { name: 'Concert News', count: 22, href: '/news/concerts' },
+    { name: 'Station News', count: 12, href: '/news/station' }
   ]
 
   const formatDate = (dateString: string) => {
@@ -210,6 +290,25 @@ export default function NewsPageClient() {
         </div>
       </section>
 
+      {/* Breaking News Ticker */}
+      <section className="bg-black text-red-500 py-3 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center">
+            <span className="bg-red-500 text-white px-4 py-2 text-sm font-bold mr-6 rounded">BREAKING</span>
+            <div className="flex-1 overflow-hidden">
+              <div className="animate-marquee whitespace-nowrap">
+                <span className="mx-8">🎸 Metallica announces surprise El Paso show at Don Haskins Center</span>
+                <span className="mx-8">📻 KLAQ wins "Best Rock Station" award for 5th consecutive year</span>
+                <span className="mx-8">🤘 Alice in Chains confirms new album release date</span>
+                <span className="mx-8">🎵 Local band "Desert Storm" signs major record deal</span>
+                <span className="mx-8">🔥 Tool drops cryptic teaser for upcoming El Paso appearance</span>
+                <span className="mx-8">🎤 Foo Fighters add second El Paso date due to demand</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Featured News */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -266,44 +365,76 @@ export default function NewsPageClient() {
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
             Latest News
           </h2>
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              {latestNews.map((article) => (
-                <article key={article.id} className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between mb-3">
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {article.category}
-                    </span>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock className="w-4 h-4 mr-1" />
-                      <span>{formatDate(article.date)}</span>
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <div className="grid md:grid-cols-2 gap-6">
+                {latestNews.slice(0, 8).map((article) => (
+                  <article key={article.id} className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between mb-3">
+                      <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                        {article.category}
+                      </span>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{formatDate(article.date)}</span>
+                      </div>
                     </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <User className="w-4 h-4 mr-1" />
-                      <span>{article.author}</span>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-2">
+                      {article.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <User className="w-4 h-4 mr-1" />
+                        <span>{article.author}</span>
+                      </div>
+                      <Link 
+                        href={`/news/${article.id}`}
+                        className="inline-flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
+                      >
+                        Read More
+                        <ArrowRight className="w-4 h-4 ml-1" />
+                      </Link>
                     </div>
-                    <Link 
-                      href={`/news/${article.id}`}
-                      className="inline-flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
-                    >
-                      Read More
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </Link>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))}
+              </div>
+              
+              {/* More News Button */}
+              <div className="text-center mt-8">
+                <Link 
+                  href="/news/rock-news"
+                  className="inline-flex items-center bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+                >
+                  View All Rock News
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </div>
             </div>
 
             {/* Sidebar */}
             <div className="space-y-8">
+              {/* Trending Stories */}
+              <div className="bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg p-6 mb-6">
+                <h3 className="text-2xl font-bold mb-4">🔥 Trending Stories</h3>
+                <div className="space-y-3">
+                  <Link href="/news/1" className="block hover:bg-red-400 p-3 rounded-lg transition-colors">
+                    <h4 className="font-semibold mb-1">Linkin Park Announces Reunion Tour</h4>
+                    <p className="text-red-100 text-sm">The band reveals massive world tour plans...</p>
+                  </Link>
+                  <Link href="/news/2" className="block hover:bg-red-400 p-3 rounded-lg transition-colors">
+                    <h4 className="font-semibold mb-1">Tool Drops Cryptic Album Teaser</h4>
+                    <p className="text-red-100 text-sm">Mysterious social media posts hint at new material...</p>
+                  </Link>
+                  <Link href="/news/3" className="block hover:bg-red-400 p-3 rounded-lg transition-colors">
+                    <h4 className="font-semibold mb-1">El Paso Venue Hosts Secret Show</h4>
+                    <p className="text-red-100 text-sm">Major rock act surprises local fans...</p>
+                  </Link>
+                </div>
+              </div>
+
               {/* Categories */}
               <div className="bg-gray-50 rounded-lg p-6">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Categories</h3>
