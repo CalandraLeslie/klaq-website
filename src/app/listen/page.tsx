@@ -1,14 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import LiveStreamPlayer from '@/components/LiveStreamPlayer';
+import ListenNowPlayer from '@/components/ListenNowPlayer';
+import Q2Player from '@/components/Q2Player';
 import { Radio, Clock, Headphones, Share2, Volume2 } from 'lucide-react';
 
 export default function ListenPage() {
-  const [isStreamPlaying, setIsStreamPlaying] = useState(false);
+  const [isListenNowPlaying, setIsListenNowPlaying] = useState(false);
+  const [isQ2Playing, setIsQ2Playing] = useState(false);
 
-  const handleStreamToggle = () => {
-    setIsStreamPlaying(!isStreamPlaying);
+  const handleListenNowToggle = () => {
+    // Stop Q2 if it's playing
+    if (isQ2Playing) {
+      setIsQ2Playing(false);
+    }
+    setIsListenNowPlaying(!isListenNowPlaying);
+  };
+
+  const handleQ2Toggle = () => {
+    // Stop Listen Now if it's playing
+    if (isListenNowPlaying) {
+      setIsListenNowPlaying(false);
+    }
+    setIsQ2Playing(!isQ2Playing);
   };
 
   return (
@@ -63,13 +77,34 @@ export default function ListenPage() {
         {/* Stream Player Section */}
         <section className="py-20 bg-gray-50">
           <div className="container-responsive">
-            <div className="max-w-2xl mx-auto">
-              <LiveStreamPlayer
-                isPlaying={isStreamPlaying}
-                onPlayToggle={handleStreamToggle}
-                showNowPlaying={true}
-                compact={false}
-              />
+            <div className="max-w-2xl mx-auto space-y-12">
+              {/* Listen Now Player */}
+              <div>
+                <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+                  95.5 KLAQ Live Stream
+                </h2>
+                
+                <ListenNowPlayer
+                  isPlaying={isListenNowPlaying}
+                  onPlayToggle={handleListenNowToggle}
+                  showNowPlaying={true}
+                  compact={false}
+                />
+              </div>
+
+              {/* Q2 Player */}
+              <div>
+                <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+                  Q2 HD2 Alternative Rock
+                </h2>
+                
+                <Q2Player
+                  isPlaying={isQ2Playing}
+                  onPlayToggle={handleQ2Toggle}
+                  showNowPlaying={true}
+                  compact={false}
+                />
+              </div>
               
               {/* Additional Controls */}
               <div className="mt-10 bg-white rounded-xl shadow-lg p-8">

@@ -9,46 +9,46 @@ const formatListeners = (num: number): string => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-interface Q2PlayerProps {
+interface ListenNowPlayerProps {
   isPlaying: boolean;
   onPlayToggle: () => void;
   showNowPlaying?: boolean;
   compact?: boolean;
 }
 
-export default function Q2Player({ 
+export default function ListenNowPlayer({ 
   isPlaying, 
   onPlayToggle, 
   showNowPlaying = true, 
   compact = false 
-}: Q2PlayerProps) {
+}: ListenNowPlayerProps) {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentShow, setCurrentShow] = useState('Alternative Rock');
-  const [listeners, setListeners] = useState(892);
+  const [currentShow, setCurrentShow] = useState('KLAQ Rocks');
+  const [listeners, setListeners] = useState(2847);
   const [isLoading, setIsLoading] = useState(false);
   const [streamError, setStreamError] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [currentTrack, setCurrentTrack] = useState({
-    title: 'Alternative Rock Hits',
-    artist: 'Q2 HD2',
+    title: 'Rock Hits All Day',
+    artist: '95.5 KLAQ',
     album: '',
     year: ''
   });
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const streamUrl = "https://live.amperwave.net/direct/townsquare-klaqhd2aac-ibc3";
+  const streamUrl = "https://live.amperwave.net/direct/townsquare-klaqaac-ibc3";
 
   // Track hydration to prevent mismatches
   useEffect(() => {
     setIsClient(true);
-    setCurrentShow('Alternative Rock');
+    setCurrentShow('KLAQ Rocks');
   }, []);
 
   // Update current show every minute
   useEffect(() => {
     const updateShow = () => {
-      setCurrentShow('Alternative Rock');
+      setCurrentShow('KLAQ Rocks');
     };
     
     const interval = setInterval(updateShow, 60000); // Update every minute
@@ -82,7 +82,7 @@ export default function Q2Player({
 
   const togglePlayback = () => {
     if (streamError) {
-      window.open('https://live.amperwave.net/direct/townsquare-klaqhd2aac-ibc3', '_blank');
+      window.open('https://live.amperwave.net/direct/townsquare-klaqaac-ibc3', '_blank');
       return;
     }
     
@@ -126,7 +126,7 @@ export default function Q2Player({
         onCanPlay={() => setIsLoading(false)}
       />
       
-      {/* Main Q2 Player */}
+      {/* Main Listen Now Player */}
       <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl shadow-2xl relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-r from-gray-700/20 to-gray-900/20"></div>
@@ -170,14 +170,14 @@ export default function Q2Player({
               <Radio className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold">Q2 HD2</h3>
-              <p className="text-base text-gray-100">Alternative Rock</p>
+              <h3 className="text-2xl font-bold">95.5 KLAQ</h3>
+              <p className="text-base text-gray-100">Live Stream</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-2 text-base">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span>{isClient ? formatListeners(listeners) : '892'} listeners</span>
+            <span>{isClient ? formatListeners(listeners) : '2,847'} listeners</span>
           </div>
         </div>
 
@@ -187,7 +187,7 @@ export default function Q2Player({
           <div className="space-y-1">
             <h4 className="font-semibold truncate">{currentTrack.title}</h4>
             <p className="text-sm text-gray-100">
-              {currentTrack.artist} • Alternative Rock
+              {currentTrack.artist} • El Paso's Best Rock
             </p>
           </div>
         </div>
@@ -242,7 +242,7 @@ export default function Q2Player({
 
           <div className="text-right">
             <p className="text-xs text-gray-100">Frequency</p>
-            <p className="text-sm font-semibold">95.5 HD2</p>
+            <p className="text-sm font-semibold">95.5 FM</p>
           </div>
         </div>
       </div>

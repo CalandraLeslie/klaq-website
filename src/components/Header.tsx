@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Play, Radio, Volume2, ChevronDown } from 'lucide-react';
-
-interface HeaderProps {
-  isPlaying?: boolean;
-  onPlayToggle?: () => void;
-}
+import { Menu, X, Radio, ChevronDown } from 'lucide-react';
 
 interface DropdownItem {
   name: string;
@@ -23,19 +18,7 @@ interface NavigationItem {
 
 const navigation: NavigationItem[] = [
   { name: 'Home', href: '/' },
-  {
-    name: 'Listen',
-    href: '/listen',
-    dropdown: [
-      { name: 'Listen Live to KLAQ', href: '/listen', description: 'El Paso\'s Best Rock' },
-      { name: 'Listen Live to Q2', href: '/listen/q2', description: 'Alternative Rock' },
-      { name: 'Listen on Alexa', href: '/listen/alexa', description: 'Voice Commands' },
-      { name: 'Listen on Google Home', href: '/listen/google-home', description: 'Smart Speakers' },
-      { name: 'KLAQ Mobile App', href: '/app', description: 'Download Now' },
-      { name: 'Recently Played Songs', href: '/playlist', description: 'Current Playlist' },
-      { name: 'Radio On Demand', href: '/on-demand', description: 'Catch Up on Shows' },
-    ]
-  },
+  { name: 'Listen', href: '/listen' },
   {
     name: 'Shows',
     href: '/shows',
@@ -107,7 +90,7 @@ const navigation: NavigationItem[] = [
   },
 ];
 
-export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps) {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -231,54 +214,8 @@ export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps)
             ))}
           </div>
 
-          {/* Enhanced Live Stream Control & Mobile Menu Button */}
+          {/* Mobile Menu Button */}
           <div className="flex items-center space-x-4">
-            {/* Professional Live Stream Button */}
-            <button
-              onClick={onPlayToggle}
-              className={`relative flex items-center space-x-3 px-6 py-3 rounded-full font-bold text-sm tracking-wide uppercase transition-all duration-300 focus-visible group overflow-hidden ${
-                isPlaying
-                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 shadow-xl shadow-red-500/30'
-                  : scrolled
-                  ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:from-gray-900 hover:to-black shadow-lg shadow-gray-500/20'
-                  : 'bg-gradient-to-r from-white/20 to-white/10 text-white hover:from-white/30 hover:to-white/20 backdrop-blur-sm border border-white/20'
-              }`}
-              aria-label={isPlaying ? 'Pause live stream' : 'Play live stream'}
-            >
-              {/* Animated background for live state */}
-              {isPlaying && (
-                <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-red-600/20 animate-pulse"></div>
-              )}
-              
-              <div className="relative z-10 flex items-center space-x-3">
-                <div className={`flex items-center justify-center w-6 h-6 ${isPlaying ? 'animate-pulse' : ''}`}>
-                  {isPlaying ? (
-                    <Volume2 className="w-5 h-5" />
-                  ) : (
-                    <Play className="w-5 h-5" />
-                  )}
-                </div>
-                
-                <div className="hidden sm:block text-left">
-                  <div className="flex items-center space-x-2">
-                    <span className="font-black">
-                      {isPlaying ? 'LIVE' : 'LISTEN LIVE'}
-                    </span>
-                    {isPlaying && (
-                      <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-                    )}
-                  </div>
-                  {isPlaying && (
-                    <div className="text-xs font-medium opacity-90">
-                      95.5 FM • ON AIR
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              {/* Hover effect overlay */}
-              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
 
             {/* Enhanced Mobile Menu Button */}
             <button
@@ -367,39 +304,6 @@ export default function Header({ isPlaying = false, onPlayToggle }: HeaderProps)
                   )}
                 </div>
               ))}
-            </div>
-
-            {/* Enhanced Live Stream Section */}
-            <div className="border-t border-gray-200 pt-6">
-              <button
-                onClick={() => {
-                  onPlayToggle?.();
-                  setMobileMenuOpen(false);
-                }}
-                className={`w-full flex items-center justify-center space-x-3 px-6 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                  isPlaying
-                    ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-xl shadow-red-500/30'
-                    : 'bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:from-gray-900 hover:to-black'
-                }`}
-              >
-                <div className="flex items-center justify-center w-6 h-6">
-                  {isPlaying ? (
-                    <Volume2 className="w-5 h-5" />
-                  ) : (
-                    <Play className="w-5 h-5" />
-                  )}
-                </div>
-                <span>{isPlaying ? 'LIVE ON AIR' : 'LISTEN LIVE'}</span>
-                {isPlaying && (
-                  <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-                )}
-              </button>
-              
-              {isPlaying && (
-                <p className="text-center text-sm text-gray-600 mt-3 font-medium">
-                  95.5 FM • El Paso's Best Rock
-                </p>
-              )}
             </div>
           </div>
         </>

@@ -209,9 +209,9 @@ export default function LiveStreamPlayer({
       )}
       
       {/* Main Stream Player */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-xl shadow-2xl relative overflow-hidden">
+      <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-xl shadow-2xl relative overflow-hidden">
       {/* Animated background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-800/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-700/20 to-gray-900/20"></div>
       {isPlaying && (
         <div className="absolute inset-0">
           {[...Array(3)].map((_, i) => (
@@ -239,14 +239,14 @@ export default function LiveStreamPlayer({
       <div className="relative z-10">
         {/* Error Display */}
         {streamError && (
-          <div className="mb-4 p-3 bg-red-800/50 border border-red-600/50 rounded-lg">
+          <div className="mb-4 p-3 bg-gray-800/50 border border-gray-600/50 rounded-lg">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-red-200">
+              <p className="text-sm text-gray-200">
                 {streamError ? "Stream temporarily unavailable. Redirecting to external player..." : "Stream error occurred"}
               </p>
               <button
                 onClick={reloadStream}
-                className="ml-2 px-3 py-1 bg-red-700 hover:bg-red-600 rounded text-xs transition-colors"
+                className="ml-2 px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs transition-colors"
               >
                 Retry
               </button>
@@ -261,7 +261,7 @@ export default function LiveStreamPlayer({
             </div>
             <div>
               <h3 className="text-2xl font-bold">95.5 KLAQ</h3>
-              <p className="text-base text-red-100">Live Stream</p>
+              <p className="text-base text-gray-100">Live Stream</p>
             </div>
           </div>
           
@@ -273,10 +273,10 @@ export default function LiveStreamPlayer({
 
         {/* Now Playing */}
         <div className="mb-4">
-          <p className="text-sm text-red-100 mb-1">Now Playing</p>
+          <p className="text-sm text-gray-100 mb-1">Now Playing</p>
           <div className="space-y-1">
             <h4 className="font-semibold truncate">{currentTrack.title}</h4>
-            <p className="text-sm text-red-100">
+            <p className="text-sm text-gray-100">
               {currentTrack.artist} • {currentTrack.album}{currentTrack.year && ` (${currentTrack.year})`}
             </p>
           </div>
@@ -284,7 +284,7 @@ export default function LiveStreamPlayer({
 
         {/* Current Show */}
         <div className="mb-6">
-          <p className="text-sm text-red-100 mb-1">Current Show</p>
+          <p className="text-sm text-gray-100 mb-1">Current Show</p>
           <p className="font-medium">{currentShow}</p>
         </div>
 
@@ -309,7 +309,7 @@ export default function LiveStreamPlayer({
             <div className="flex items-center space-x-2">
               <button
                 onClick={toggleMute}
-                className="p-2 text-white hover:text-red-300 transition-colors duration-200 focus-visible"
+                className="p-2 text-white hover:text-gray-300 transition-colors duration-200 focus-visible"
                 aria-label={isMuted ? 'Unmute' : 'Mute'}
               >
                 {isMuted ? (
@@ -335,7 +335,7 @@ export default function LiveStreamPlayer({
           </div>
 
           <div className="text-right">
-            <p className="text-xs text-red-100">Frequency</p>
+            <p className="text-xs text-gray-100">Frequency</p>
             <p className="font-bold">95.5 FM</p>
           </div>
         </div>
