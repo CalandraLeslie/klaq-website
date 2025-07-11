@@ -1,20 +1,19 @@
-import type { Metadata } from 'next'
+'use client';
+
+import { useState } from 'react';
 import Q2Player from '@/components/Q2Player'
 
-export const metadata: Metadata = {
-  title: 'Q2 - The Alternative - HD2 | KLAQ 95.5 FM',
-  description: 'Listen to Q2 - The Alternative on KLAQ HD2. The best alternative rock music 24/7 with no commercials. Stream live now.',
-  keywords: 'Q2, alternative rock, HD2, KLAQ, streaming, alternative music, rock radio, El Paso',
-  openGraph: {
-    title: 'Q2 - The Alternative - HD2 | KLAQ 95.5 FM',
-    description: 'Listen to Q2 - The Alternative on KLAQ HD2. The best alternative rock music 24/7 with no commercials.',
-    type: 'website',
-    url: 'https://klaq.com/listen/hd2-q2',
-    siteName: 'KLAQ 95.5 FM'
-  }
-}
-
 export default function Q2Page() {
+  const [isQ2Playing, setIsQ2Playing] = useState(false);
+
+  const handleQ2Toggle = () => {
+    setIsQ2Playing(!isQ2Playing);
+  };
+
+  const handleQ2Stop = () => {
+    setIsQ2Playing(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-slate-50">
       {/* Hero Section */}
@@ -39,7 +38,11 @@ export default function Q2Page() {
       {/* Q2 Player Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
-          <Q2Player />
+          <Q2Player 
+            isPlaying={isQ2Playing}
+            onPlayToggle={handleQ2Toggle}
+            onStop={handleQ2Stop}
+          />
         </div>
       </div>
 

@@ -216,7 +216,6 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <div className="flex items-center space-x-4">
-
             {/* Enhanced Mobile Menu Button */}
             <button
               type="button"

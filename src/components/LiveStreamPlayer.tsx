@@ -32,6 +32,7 @@ export default function LiveStreamPlayer({
   const [isClient, setIsClient] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // KLAQ live stream URL
   const streamUrl = "https://live.amperwave.net/direct/townsquare-klaqfmaac-ibc3";
 
   // Track hydration to prevent mismatches
@@ -58,22 +59,35 @@ export default function LiveStreamPlayer({
     year: '2024'
   });
 
-  // Handle play/pause with new stream logic
+  // Handle play/pause with direct audio control
   const togglePlayback = () => {
-    if (isPlaying) {
-      audioRef.current?.pause();
-      onPlayToggle();
-    } else {
-      setIsLoading(true);
-      setStreamError(false);
+    if (audioRef.current) {
+      const audio = audioRef.current;
       
-      audioRef.current?.play().catch(error => {
-        console.error("Audio playback failed:", error);
-        setStreamError(true);
-        setIsLoading(false);
-        // Open external player as fallback
-        window.open("https://klaq.com/listen-live/", "_blank", "noopener,noreferrer");
-      });
+      if (isPlaying) {
+        audio.pause();
+        onPlayToggle();
+      } else {
+        setIsLoading(true);
+        setStreamError(false);
+        
+        // Set up audio for live streaming
+        audio.volume = volume;
+        audio.muted = isMuted;
+        audio.crossOrigin = 'anonymous';
+        
+        audio.play().then(() => {
+          console.log('KLAQ live stream started successfully - AUDIO PLAYING');
+          setIsLoading(false);
+          onPlayToggle();
+        }).catch(error => {
+          console.error("Audio playback failed:", error);
+          setStreamError(true);
+          setIsLoading(false);
+          // Open external player as fallback
+          window.open("https://klaq.com/listen-live/", "_blank", "noopener,noreferrer");
+        });
+      }
     }
   };
 
@@ -82,11 +96,17 @@ export default function LiveStreamPlayer({
     const handlePlay = () => {
       setIsLoading(false);
       setStreamError(false);
+      console.log('KLAQ live stream playing - audio should be heard');
     };
     
-    const handleError = () => {
+    const handlePause = () => {
+      console.log('KLAQ live stream paused');
+    };
+    
+    const handleError = (e: Event) => {
       setStreamError(true);
       setIsLoading(false);
+      console.error('KLAQ stream error:', e);
       if (audioRef.current) {
         audioRef.current.pause();
       }
@@ -94,26 +114,36 @@ export default function LiveStreamPlayer({
 
     const handleLoadStart = () => {
       setIsLoading(true);
+      console.log('KLAQ stream loading...');
     };
 
     const handleCanPlay = () => {
       setIsLoading(false);
+      console.log('KLAQ stream ready to play');
+    };
+
+    const handleLoadedData = () => {
+      console.log('KLAQ stream data loaded');
     };
 
     const audioElement = audioRef.current;
     if (audioElement) {
       audioElement.addEventListener('play', handlePlay);
+      audioElement.addEventListener('pause', handlePause);
       audioElement.addEventListener('error', handleError);
       audioElement.addEventListener('loadstart', handleLoadStart);
       audioElement.addEventListener('canplay', handleCanPlay);
+      audioElement.addEventListener('loadeddata', handleLoadedData);
     }
 
     return () => {
       if (audioElement) {
         audioElement.removeEventListener('play', handlePlay);
+        audioElement.removeEventListener('pause', handlePause);
         audioElement.removeEventListener('error', handleError);
         audioElement.removeEventListener('loadstart', handleLoadStart);
         audioElement.removeEventListener('canplay', handleCanPlay);
+        audioElement.removeEventListener('loadeddata', handleLoadedData);
       }
     };
   }, []);
@@ -227,13 +257,15 @@ export default function LiveStreamPlayer({
         </div>
       )}
 
-      {/* Audio element with stream URL */}
+      {/* Audio element with KLAQ live stream */}
       <audio
         ref={audioRef}
         src={streamUrl}
-        preload="none"
+        preload="auto"
         crossOrigin="anonymous"
         className="hidden"
+        autoPlay={false}
+        controls={false}
       />
 
       <div className="relative z-10">

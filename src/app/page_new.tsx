@@ -16,10 +16,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header 
-        isPlaying={isStreamPlaying} 
-        onPlayToggle={handleStreamToggle} 
-      />
+      <Header />
       
       <main>
         <HeroSection />

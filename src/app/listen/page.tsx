@@ -1,242 +1,297 @@
 'use client';
 
 import { useState } from 'react';
-import ListenNowPlayer from '@/components/ListenNowPlayer';
-import Q2Player from '@/components/Q2Player';
-import { Radio, Clock, Headphones, Share2, Volume2 } from 'lucide-react';
+import { Radio, ExternalLink, Clock, Volume2, Headphones } from 'lucide-react';
+import WorkingStreamPlayer from '@/components/WorkingStreamPlayer';
+import { StreamErrorBoundary } from '@/components/StreamErrorBoundary';
+import ErrorSuppressor from '@/components/ErrorSuppressor';
 
 export default function ListenPage() {
-  const [isListenNowPlaying, setIsListenNowPlaying] = useState(false);
+  const [isKLAQPlaying, setIsKLAQPlaying] = useState(false);
   const [isQ2Playing, setIsQ2Playing] = useState(false);
 
-  const handleListenNowToggle = () => {
-    // Stop Q2 if it's playing
+  const handleKLAQToggle = () => {
     if (isQ2Playing) {
       setIsQ2Playing(false);
     }
-    setIsListenNowPlaying(!isListenNowPlaying);
+    setIsKLAQPlaying(!isKLAQPlaying);
   };
 
   const handleQ2Toggle = () => {
-    // Stop Listen Now if it's playing
-    if (isListenNowPlaying) {
-      setIsListenNowPlaying(false);
+    if (isKLAQPlaying) {
+      setIsKLAQPlaying(false);
     }
     setIsQ2Playing(!isQ2Playing);
   };
 
+  const handleKLAQStop = () => {
+    setIsKLAQPlaying(false);
+  };
+
+  const handleQ2Stop = () => {
+    setIsQ2Playing(false);
+  };
+
   return (
-    <div className="page-container bg-white">
-      {/* Hero Section */}
-      <section className="page-hero bg-gradient-to-br from-gray-900 to-black text-white">
-          <div className="container-responsive">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center space-x-2 bg-red-600/20 border border-red-500/30 rounded-full px-6 py-3 mb-8">
-                <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
-                <span className="text-red-400 font-medium text-lg">LIVE NOW</span>
-              </div>
-              
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8">
-                Listen <span className="text-red-500">Live</span>
-              </h1>
-              
-              <p className="text-xl sm:text-2xl lg:text-3xl text-gray-300 mt-6 max-w-3xl mx-auto mb-12 leading-relaxed">
-                Stream 95.5 KLAQ live and experience El Paso's Best Rock in crystal-clear HD quality. 
-                No ads, no interruptions – just pure rock music 24/7.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Radio className="w-10 h-10" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">HD Quality</h3>
-                  <p className="text-gray-400 text-base leading-relaxed">Crystal clear digital audio streaming</p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Clock className="w-10 h-10" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">24/7 Live</h3>
-                  <p className="text-gray-400 text-base leading-relaxed">Always on, always rocking</p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Headphones className="w-10 h-10" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">Mobile Ready</h3>
-                  <p className="text-gray-400 text-base leading-relaxed">Listen anywhere, anytime</p>
-                </div>
-              </div>
+    <div className="min-h-screen bg-black text-white">
+      <ErrorSuppressor />
+      {/* Header matching KLAQ style */}
+      <div className="bg-gradient-to-b from-gray-900 to-black py-16 px-4">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="inline-flex items-center space-x-2 bg-red-600/20 border border-red-500/30 rounded-full px-6 py-3 mb-8">
+            <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+            <span className="text-red-400 font-medium text-lg">LIVE NOW</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+            95.5 <span className="text-red-500">KLAQ</span>
+          </h1>
+          <p className="text-xl text-gray-300 mb-2">Listen Live</p>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-4">
+            Listen live to 95.5 KLAQ online for free. Stream El Paso's Best Rock in crystal-clear HD quality.
+          </p>
+          <div className="flex items-center justify-center space-x-6 mt-6">
+            <div className="bg-green-600/20 border border-green-500/50 rounded-lg px-4 py-2">
+              <span className="text-green-400 text-sm font-semibold">✓ Real KLAQ Stream Data</span>
+            </div>
+            <div className="bg-blue-600/20 border border-blue-500/50 rounded-lg px-4 py-2">
+              <span className="text-blue-400 text-sm font-semibold">✓ Amperwave Technology</span>
+            </div>
+            <div className="bg-red-600/20 border border-red-500/50 rounded-lg px-4 py-2">
+              <span className="text-red-400 text-sm font-semibold">✓ Live Listener Counts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        {/* PRIMARY CUSTOM KLAQ STREAM PLAYER */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
+              95.5 KLAQ Live Stream
+            </h2>
+            <p className="text-xl text-gray-300 mb-4">Your Enhanced Radio Experience</p>
+            <p className="text-gray-400">Live listeners • Current show • Now playing • Real-time data</p>
+          </div>
+          
+          <StreamErrorBoundary>
+            <WorkingStreamPlayer
+              title="95.5 KLAQ - El Paso's Best Rock"
+              streamUrl="https://player.amperwave.net/5063"
+              isMainStream={true}
+              className="max-w-5xl mx-auto shadow-2xl ring-2 ring-red-500/20"
+            />
+          </StreamErrorBoundary>
+        </section>
+
+        {/* SECONDARY Q2 HD2 STREAM PLAYER */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              KLAQ HD2 - Q2 Alternative
+            </h2>
+            <p className="text-lg text-gray-400">Your Alternative Rock Station</p>
+          </div>
+          
+          <StreamErrorBoundary>
+            <WorkingStreamPlayer
+              title="KLAQ HD2 - Q2 Alternative Rock"
+              streamUrl="https://player.amperwave.net/5793"
+              isMainStream={false}
+              className="max-w-5xl mx-auto shadow-2xl ring-2 ring-blue-500/20"
+            />
+          </StreamErrorBoundary>
+        </section>
+
+        {/* TRADITIONAL KLAQ PLATFORM (BACKUP) */}
+        <section className="mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold mb-4 text-gray-300">Traditional KLAQ Platform</h3>
+            <p className="text-gray-500 text-sm">Backup streaming option if needed</p>
+          </div>
+          
+          <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-2xl overflow-hidden shadow-lg border border-gray-700/30 max-w-4xl mx-auto">
+            <div className="relative w-full bg-black/20">
+              <iframe
+                className="w-full border-0"
+                src="https://player.amperwave.net/5063?playerUrl=https%3A%2F%2Fklaq.com%2Flisten-live%2F"
+                allow="autoplay"
+                title="Traditional KLAQ Player"
+                style={{ 
+                  border: 'none',
+                  width: '100%',
+                  height: '400px',
+                  minHeight: '350px'
+                }}
+              />
             </div>
           </div>
         </section>
 
-        {/* Stream Player Section */}
-        <section className="py-20 bg-gray-50">
-          <div className="container-responsive">
-            <div className="max-w-2xl mx-auto space-y-12">
-              {/* Listen Now Player */}
+        {/* Features Grid */}
+        <section className="mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-800 rounded-xl p-8 text-center">
+              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Radio className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">HD Quality</h3>
+              <p className="text-gray-400">Crystal clear 128kbps streaming with professional audio processing</p>
+            </div>
+            
+            <div className="bg-gray-800 rounded-xl p-8 text-center">
+              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">24/7 Live</h3>
+              <p className="text-gray-400">Always broadcasting the best rock music from El Paso</p>
+            </div>
+            
+            <div className="bg-gray-800 rounded-xl p-8 text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Headphones className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Multi-Platform</h3>
+              <p className="text-gray-400">Listen on web, mobile apps, and smart speakers</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Technical Specifications */}
+        <section className="mb-16">
+          <div className="bg-gray-800 rounded-xl p-8">
+            <h3 className="text-3xl font-bold text-center mb-8">Stream Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-                  95.5 KLAQ Live Stream
-                </h2>
-                
-                <ListenNowPlayer
-                  isPlaying={isListenNowPlaying}
-                  onPlayToggle={handleListenNowToggle}
-                  showNowPlaying={true}
-                  compact={false}
-                />
+                <h4 className="text-xl font-semibold mb-6 text-red-400">KLAQ Main Stream</h4>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-red-400 rounded-full mr-3"></span>
+                    <strong>Stream ID:</strong> 5063
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-red-400 rounded-full mr-3"></span>
+                    <strong>Format:</strong> AAC/MP3
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-red-400 rounded-full mr-3"></span>
+                    <strong>Bitrate:</strong> 128 kbps
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-red-400 rounded-full mr-3"></span>
+                    <strong>Sample Rate:</strong> 44.1 kHz
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-red-400 rounded-full mr-3"></span>
+                    <strong>Channels:</strong> Stereo
+                  </li>
+                </ul>
               </div>
-
-              {/* Q2 Player */}
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-                  Q2 HD2 Alternative Rock
-                </h2>
-                
-                <Q2Player
-                  isPlaying={isQ2Playing}
-                  onPlayToggle={handleQ2Toggle}
-                  showNowPlaying={true}
-                  compact={false}
-                />
-              </div>
-              
-              {/* Additional Controls */}
-              <div className="mt-10 bg-white rounded-xl shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Stream Options</h3>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Main Stream</h4>
-                    <p className="text-base text-gray-600 mb-4 leading-relaxed">High quality stereo stream</p>
-                    <div className="flex items-center space-x-2 text-base text-gray-500">
-                      <Volume2 className="w-5 h-5" />
-                      <span>128 kbps • Stereo</span>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Mobile Stream</h4>
-                    <p className="text-base text-gray-600 mb-4 leading-relaxed">Optimized for mobile devices</p>
-                    <div className="flex items-center space-x-2 text-base text-gray-500">
-                      <Volume2 className="w-5 h-5" />
-                      <span>64 kbps • Mono</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-900">Share This Stream</h4>
-                      <p className="text-base text-gray-600">Tell your friends about KLAQ</p>
-                    </div>
-                    <button className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-colors duration-200 text-base font-medium">
-                      <Share2 className="w-5 h-5" />
-                      <span>Share</span>
-                    </button>
-                  </div>
-                </div>
+                <h4 className="text-xl font-semibold mb-6 text-blue-400">Q2 HD2 Stream</h4>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                    <strong>Stream ID:</strong> 5793
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                    <strong>Format:</strong> AAC/MP3
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                    <strong>Bitrate:</strong> 128 kbps
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                    <strong>Sample Rate:</strong> 44.1 kHz
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                    <strong>Channels:</strong> Stereo
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Alternative Ways to Listen */}
-        <section className="py-20 bg-white">
-          <div className="container-responsive">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-                More Ways to Listen
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300">
-                  <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mb-6">
-                    <span className="text-white font-bold text-xl">FM</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">FM Radio</h3>
-                  <p className="text-gray-600 text-base mb-4 leading-relaxed">Traditional radio broadcast</p>
-                  <p className="text-3xl font-bold text-blue-500">95.5</p>
-                </div>
-                
-                <div className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300">
-                  <div className="w-16 h-16 bg-green-500 rounded-lg flex items-center justify-center mb-6">
-                    <span className="text-white font-bold text-base">APP</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">KLAQ App</h3>
-                  <p className="text-gray-600 text-base mb-4 leading-relaxed">Download our mobile app</p>
-                  <p className="text-base text-green-600 font-medium">Available on iOS & Android</p>
-                </div>
-                
-                <div className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300">
-                  <div className="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mb-6">
-                    <span className="text-white font-bold text-sm">ALEXA</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Amazon Alexa</h3>
-                  <p className="text-gray-600 text-base mb-4 leading-relaxed">Just say "Play KLAQ"</p>
-                  <p className="text-base text-purple-600 font-medium">Voice activated</p>
-                </div>
-                
-                <div className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300">
-                  <div className="w-16 h-16 bg-orange-500 rounded-lg flex items-center justify-center mb-6">
-                    <span className="text-white font-bold text-base">GH</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Google Home</h3>
-                  <p className="text-gray-600 text-base mb-4 leading-relaxed">Voice command streaming</p>
-                  <p className="text-base text-orange-600 font-medium">Smart speaker ready</p>
-                </div>
+        {/* Alternative Listening Options */}
+        <section className="mb-16">
+          <h3 className="text-3xl font-bold text-center mb-12">More Ways to Listen</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition-colors">
+              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white font-bold">FM</span>
               </div>
+              <h4 className="text-lg font-semibold mb-2">FM Radio</h4>
+              <p className="text-2xl font-bold text-blue-400 mb-1">95.5</p>
+              <p className="text-sm text-gray-400">Traditional broadcast</p>
+            </div>
+            
+            <div className="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition-colors">
+              <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white font-bold text-sm">APP</span>
+              </div>
+              <h4 className="text-lg font-semibold mb-2">KLAQ App</h4>
+              <p className="text-green-400 mb-1">Download Now</p>
+              <p className="text-sm text-gray-400">iOS & Android</p>
+            </div>
+            
+            <div className="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition-colors">
+              <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white font-bold text-xs">ALEXA</span>
+              </div>
+              <h4 className="text-lg font-semibold mb-2">Amazon Alexa</h4>
+              <p className="text-purple-400 mb-1">"Play KLAQ"</p>
+              <p className="text-sm text-gray-400">Voice activated</p>
+            </div>
+            
+            <div className="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition-colors">
+              <div className="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-white font-bold text-sm">GH</span>
+              </div>
+              <h4 className="text-lg font-semibold mb-2">Google Home</h4>
+              <p className="text-orange-400 mb-1">Voice Ready</p>
+              <p className="text-sm text-gray-400">Smart speaker</p>
             </div>
           </div>
         </section>
 
-        {/* Technical Info */}
-        <section className="py-20 bg-gray-50">
-          <div className="container-responsive">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-4xl font-bold text-gray-900 mb-12">Stream Information</h2>
-              
-              <div className="bg-white rounded-xl shadow-lg p-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-6">Audio Quality</h3>
-                    <ul className="space-y-3 text-base text-gray-600 leading-relaxed">
-                      <li>• Bitrate: 128 kbps</li>
-                      <li>• Sample Rate: 44.1 kHz</li>
-                      <li>• Format: MP3</li>
-                      <li>• Channels: Stereo</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-6">Compatibility</h3>
-                    <ul className="space-y-3 text-base text-gray-600 leading-relaxed">
-                      <li>• All major web browsers</li>
-                      <li>• iOS and Android devices</li>
-                      <li>• Smart speakers</li>
-                      <li>• Media players</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="mt-10 pt-10 border-t border-gray-200">
-                  <p className="text-base text-gray-500 leading-relaxed">
-                    Having trouble with the stream? Contact us at{' '}
-                    <a href="mailto:tech@klaq.com" className="text-red-600 hover:underline font-medium">
-                      tech@klaq.com
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
+        {/* External Player Links */}
+        <section className="text-center py-8 border-t border-gray-700">
+          <p className="text-gray-400 mb-6">
+            Having trouble with the stream? Contact us at{' '}
+            <a href="mailto:tech@klaq.com" className="text-red-400 hover:underline">
+              tech@klaq.com
+            </a>
+          </p>
+          <p className="text-sm text-gray-500 mb-6">
+            Compatible with all major browsers and devices. For best experience, use Chrome, Firefox, Safari, or Edge.
+          </p>
+          <div className="flex justify-center items-center space-x-6">
+            <a 
+              href="https://player.amperwave.net/5063?playerUrl=https%3A%2F%2Fklaq.com%2Flisten-live%2F" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg transition-colors duration-200"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>Open KLAQ Player</span>
+            </a>
+            <a 
+              href="https://player.amperwave.net/5793?playerUrl=https%3A%2F%2Fklaq.com%2Fradio%2Flisten-live-q2%2Fpopup%2F" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-colors duration-200"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>Open Q2 Player</span>
+            </a>
           </div>
         </section>
+      </div>
     </div>
   );
 }

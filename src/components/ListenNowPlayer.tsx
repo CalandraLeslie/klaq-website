@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
+import { Play, Pause, Square, Volume2, VolumeX, Radio, Clock } from 'lucide-react';
 import { fetchCurrentTrack, fetchListenerCount, getCurrentShow } from '@/utils/klaqApi';
 
 // Utility function to format numbers consistently on server and client
@@ -9,31 +9,54 @@ const formatListeners = (num: number): string => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+// Format time to El Paso timezone (MST/MDT - America/Denver)
+const formatElPasoTime = (): string => {
+  return new Date().toLocaleString('en-US', {
+    timeZone: 'America/Denver',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    weekday: 'short'
+  });
+};
+
+interface TrackInfo {
+  title: string;
+  artist: string;
+  album: string;
+  year: string;
+  albumArt?: string;
+}
+
 interface ListenNowPlayerProps {
   isPlaying: boolean;
   onPlayToggle: () => void;
+  onStop?: () => void;
   showNowPlaying?: boolean;
   compact?: boolean;
 }
 
 export default function ListenNowPlayer({ 
   isPlaying, 
-  onPlayToggle, 
+  onPlayToggle,
+  onStop,
   showNowPlaying = true, 
   compact = false 
 }: ListenNowPlayerProps) {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentShow, setCurrentShow] = useState('KLAQ Rocks');
-  const [listeners, setListeners] = useState(2847);
+  const [currentShow, setCurrentShow] = useState('Loading...');
+  const [listeners, setListeners] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [streamError, setStreamError] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState({
-    title: 'Rock Hits All Day',
-    artist: '95.5 KLAQ',
+  const [currentTime, setCurrentTime] = useState('');
+  const [currentTrack, setCurrentTrack] = useState<TrackInfo>({
+    title: 'Loading...',
+    artist: 'KLAQ 95.5',
     album: '',
-    year: ''
+    year: '',
+    albumArt: undefined
   });
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -42,18 +65,59 @@ export default function ListenNowPlayer({
   // Track hydration to prevent mismatches
   useEffect(() => {
     setIsClient(true);
-    setCurrentShow('KLAQ Rocks');
+    updateCurrentTime();
+    
+    // Initial data fetch
+    fetchRealTimeData();
+    
+    // Set up intervals for real-time updates
+    const timeInterval = setInterval(updateCurrentTime, 1000);
+    const dataInterval = setInterval(fetchRealTimeData, 30000); // Update every 30 seconds
+    
+    return () => {
+      clearInterval(timeInterval);
+      clearInterval(dataInterval);
+    };
   }, []);
 
-  // Update current show every minute
-  useEffect(() => {
-    const updateShow = () => {
-      setCurrentShow('KLAQ Rocks');
-    };
-    
-    const interval = setInterval(updateShow, 60000); // Update every minute
-    return () => clearInterval(interval);
-  }, []);
+  const updateCurrentTime = () => {
+    setCurrentTime(formatElPasoTime());
+  };
+
+  const fetchRealTimeData = async () => {
+    try {
+      // Fetch current track info
+      const trackData = await fetchCurrentTrack();
+      if (trackData && typeof trackData === 'object') {
+        setCurrentTrack({
+          title: (trackData as any).title || 'KLAQ Rocks',
+          artist: (trackData as any).artist || '95.5 KLAQ',
+          album: (trackData as any).album || '',
+          year: (trackData as any).year || '',
+          albumArt: (trackData as any).albumArt
+        });
+      }
+
+      // Fetch listener count
+      const listenerData = await fetchListenerCount();
+      if (typeof listenerData === 'number') {
+        setListeners(listenerData);
+      } else if (listenerData && typeof (listenerData as any).listeners === 'number') {
+        setListeners((listenerData as any).listeners);
+      }
+
+      // Fetch current show
+      const showData = await getCurrentShow();
+      if (typeof showData === 'string') {
+        setCurrentShow(showData);
+      } else if (showData && (showData as any).showName) {
+        setCurrentShow((showData as any).showName);
+      }
+    } catch (error) {
+      console.error('Error fetching real-time data:', error);
+      // Keep existing data on error
+    }
+  };
 
   const handleVolumeChange = (newVolume: number) => {
     setVolume(newVolume);
@@ -102,6 +166,17 @@ export default function ListenNowPlayer({
     } else if (audioRef.current) {
       audioRef.current.pause();
       setIsLoading(false);
+    }
+  };
+
+  const handleStop = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsLoading(false);
+    if (onStop) {
+      onStop();
     }
   };
 
@@ -163,7 +238,7 @@ export default function ListenNowPlayer({
           </div>
         )}
 
-        {/* Header */}
+        {/* Header with Time */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
@@ -175,20 +250,50 @@ export default function ListenNowPlayer({
             </div>
           </div>
           
-          <div className="flex items-center space-x-2 text-base">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span>{isClient ? formatListeners(listeners) : '2,847'} listeners</span>
+          <div className="text-right">
+            <div className="flex items-center space-x-2 text-sm text-gray-100 mb-1">
+              <Clock className="w-4 h-4" />
+              <span>{currentTime}</span>
+            </div>
+            <div className="flex items-center space-x-2 text-base">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span>{isClient && listeners > 0 ? formatListeners(listeners) : 'Loading...'} listeners</span>
+            </div>
           </div>
         </div>
 
-        {/* Now Playing */}
+        {/* Now Playing with Album Art */}
         <div className="mb-4">
-          <p className="text-sm text-gray-100 mb-1">Now Playing</p>
-          <div className="space-y-1">
-            <h4 className="font-semibold truncate">{currentTrack.title}</h4>
-            <p className="text-sm text-gray-100">
-              {currentTrack.artist} • El Paso's Best Rock
-            </p>
+          <p className="text-sm text-gray-100 mb-2">Now Playing</p>
+          <div className="flex items-center space-x-4">
+            {/* Album Art */}
+            <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
+              {currentTrack.albumArt ? (
+                <img 
+                  src={currentTrack.albumArt} 
+                  alt={`${currentTrack.album} album art`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
+                  <Radio className="w-6 h-6 text-gray-400" />
+                </div>
+              )}
+            </div>
+            
+            {/* Track Info */}
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold truncate text-lg">{currentTrack.title}</h4>
+              <p className="text-sm text-gray-100 truncate">{currentTrack.artist}</p>
+              {currentTrack.album && (
+                <p className="text-xs text-gray-300 truncate">
+                  {currentTrack.album} {currentTrack.year && `(${currentTrack.year})`}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
@@ -198,9 +303,10 @@ export default function ListenNowPlayer({
           <p className="font-medium">{currentShow}</p>
         </div>
 
-        {/* Player Controls */}
+        {/* Player Controls with Stop Button */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
+            {/* Play/Pause Button */}
             <button
               onClick={togglePlayback}
               disabled={isLoading}
@@ -216,6 +322,17 @@ export default function ListenNowPlayer({
               )}
             </button>
 
+            {/* Stop Button */}
+            <button
+              onClick={handleStop}
+              disabled={!isPlaying}
+              className="w-10 h-10 bg-red-600/20 border border-red-400/30 hover:border-red-400/60 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 focus-visible"
+              aria-label="Stop stream"
+            >
+              <Square className="w-4 h-4 text-red-400" />
+            </button>
+
+            {/* Volume Controls */}
             <button
               onClick={toggleMute}
               className="p-2 text-white hover:text-gray-300 transition-colors duration-200 focus-visible"

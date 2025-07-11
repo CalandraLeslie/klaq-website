@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StickyMiniPlayer from '@/components/StickyMiniPlayer';
+import ErrorSuppressor from '@/components/ErrorSuppressor';
 import { useState, useRef, useEffect } from 'react';
 
 const inter = Inter({
@@ -112,6 +113,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${robotoCondensed.variable} antialiased bg-gray-50 text-gray-900`}
       >
+        <ErrorSuppressor />
         {/* Global Audio Element for Live Stream */}
         <audio
           ref={audioRef}
@@ -144,10 +146,7 @@ export default function RootLayout({
           </div>
         )}
 
-        <Header 
-          isPlaying={isStreamPlaying || isLoading} 
-          onPlayToggle={handleStreamToggle} 
-        />
+        <Header />
         <main className="">
           {children}
         </main>
